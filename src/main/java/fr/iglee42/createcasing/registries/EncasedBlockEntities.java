@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -80,9 +81,19 @@ public class EncasedBlockEntities {
     public static void register() {
         for (Block block : EncasedBlocks.ALL) {
             if (block instanceof IBE<?> ibe)
-                ((FabricBlockEntityType) ibe.getBlockEntityType()).addValidBlock(block);
+                addValidBlock(ibe.getBlockEntityType(), block);
         }
         registerTransfer();
+    }
+
+    /**
+     * Fabric makes every type's valid block set a {@link HashSet}, but addons that add blocks to
+     * Create's types by assigning an immutable copy (Copycats+ uses {@code Set.copyOf}) undo that.
+     */
+    private static void addValidBlock(BlockEntityType<?> type, Block block) {
+        if (!(type.validBlocks instanceof HashSet))
+            type.validBlocks = new HashSet<>(type.validBlocks);
+        ((FabricBlockEntityType) type).addValidBlock(block);
     }
 
     /**

@@ -3,3 +3,8 @@ classTweaker v1 official
 # Create Fly opens this in its own classtweaker, but access wideners are not transitive: the
 # mod's renderers read it like Create Fly's do.
 accessible field net/minecraft/client/renderer/blockentity/state/BlockEntityRenderState blockState Lnet/minecraft/world/level/block/state/BlockState;
+
+# Other addons (Copycats+) replace Create's valid block sets with immutable copies, which breaks
+# Fabric's addValidBlock; EncasedBlockEntities swaps such sets back to mutable ones.
+accessible field net/minecraft/world/level/block/entity/BlockEntityType validBlocks Ljava/util/Set;
+mutable field net/minecraft/world/level/block/entity/BlockEntityType validBlocks Ljava/util/Set;

@@ -43,7 +43,9 @@ capabilities and block checks accept them. Here:
   creative cogwheel, automatic clutch, configurable gearbox, the mod's shafts and cogwheels
   (wooden, glass, custom metal) and their encased forms, and the tanks. Tanks keep one shared type
   of their own, as upstream: multiblock tanks join by type, so andesite/brass/zinc tanks merge with
-  each other but not with Create's. That type needs Create Fly's transfer registration repeated
+  each other but not with Create's. Copycats+ assigns Create's types immutable `Set.copyOf`
+  sets, so `EncasedBlockEntities.addValidBlock` swaps a non-`HashSet` back to a mutable one
+  (classtweaker makes `validBlocks` mutable). That type needs Create Fly's transfer registration repeated
   (`registerTransfer`) and `FluidTankItemMixin`.
 - **`EncasedBlocks.BASE`** maps each block to its Create counterpart. `BaseBlockProviders` hangs
   providers on Create's block-keyed registries (movement and interaction behaviours, mounted
