@@ -8,6 +8,9 @@
     "fabric-client-gametest": [
       "fr.iglee42.createcasing.gametest.GameplayCheck",
       "fr.iglee42.createcasing.gametest.RenderCheck"
+    ],
+    "jei_mod_plugin": [
+      "fr.iglee42.createcasing.gametest.JeiRuntimeGrabber"
     ]
   },
   "depends": {

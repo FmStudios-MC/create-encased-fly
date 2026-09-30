@@ -58,6 +58,26 @@ public class RenderCheck implements FabricClientGameTest {
             driveRow(context, singleplayer, server, rows * 2 + 6);
             closeUps(context, singleplayer, server, rows * 2 + 14);
 
+            // ponder: the mod's own scenes, and Create's scenes for its variants
+            for (String item : new String[]{"creative_cogwheel", "brass_configurable_gearbox", "railway_automatic_clutch", "railway_press", "brass_fluid_tank"}) {
+                var ponderItem = BuiltInRegistries.ITEM.getValue(net.minecraft.resources.Identifier.fromNamespaceAndPath("createcasing", item));
+                context.setScreen(() -> com.zurrtum.create.client.ponder.foundation.ui.PonderUI.of(new net.minecraft.world.item.ItemStack(ponderItem)));
+                context.waitTicks(100);
+                context.takeScreenshot("ponder_" + item);
+                context.setScreen(() -> null);
+                context.waitTicks(2);
+            }
+
+            // JEI: the mod's machines are catalysts of Create's categories
+            var runtime = JeiRuntimeGrabber.runtime;
+            if (runtime == null) {
+                System.out.println("ENCASED-CHECK jei runtime missing");
+            } else {
+                String catalysts = runtime.getRecipeManager().createRecipeCatalystLookup(com.zurrtum.create.client.compat.jei.JeiClientPlugin.MIXING)
+                    .getItemStack().map(stack -> BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath()).toList().toString();
+                System.out.println("ENCASED-CHECK jei mixing catalysts " + catalysts);
+            }
+
             server.runOnServer(minecraftServer -> {
                 for (Block block : blocks)
                     if (block.asItem() == net.minecraft.world.item.Items.AIR)
@@ -106,6 +126,7 @@ public class RenderCheck implements FabricClientGameTest {
             "valve_handle[facing=up]", "mechanical_pump[facing=east]", "smart_fluid_pipe", "fluid_valve", "item_drain", "steam_whistle"};
         for (int i = 0; i < brass.length; i++)
             set(server, i * 2, z + 4, "createcasing:brass_" + brass[i]);
+        set(server, 32, z, "create:mechanical_mixer");
         set(server, 0, z + 5, "createcasing:brass_fluid_tank");
         set(server, 0, z + 6, "createcasing:brass_steam_engine[face=wall,facing=south]");
 
@@ -116,6 +137,14 @@ public class RenderCheck implements FabricClientGameTest {
             singleplayer.getConnection().waitForChunksRender();
             context.takeScreenshot("close_" + part);
         }
+        look(context, server, 1, Y + 2, z - 3, 1, Y, z);
+        context.waitTicks(20);
+        singleplayer.getConnection().waitForChunksRender();
+        context.takeScreenshot("close_railway_mixer_press");
+        look(context, server, 4.5, Y + 2, z - 3, 5, Y, z);
+        context.waitTicks(20);
+        singleplayer.getConnection().waitForChunksRender();
+        context.takeScreenshot("close_railway_drill_saw");
     }
 
     static void set(TestServerContext server, int x, int z, String block) {
@@ -128,6 +157,12 @@ public class RenderCheck implements FabricClientGameTest {
         float yaw = (float) Math.toDegrees(Math.atan2(-dx, dz));
         float pitch = (float) Math.toDegrees(-Math.atan2(dy, Math.sqrt(dx * dx + dz * dz)));
         server.runCommand("tp @p " + px + " " + py + " " + pz + " " + yaw + " " + pitch);
+        context.waitTicks(10);
+        context.runOnClient(mc -> {
+            mc.player.setYRot(yaw);
+            mc.player.setXRot(pitch);
+        });
+        // after a long teleport the first rotation is sometimes overwritten by the chunk reload
         context.waitTicks(10);
         context.runOnClient(mc -> {
             mc.player.setYRot(yaw);

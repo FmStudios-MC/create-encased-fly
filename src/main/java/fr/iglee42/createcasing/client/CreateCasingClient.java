@@ -3,6 +3,8 @@ package fr.iglee42.createcasing.client;
 import com.zurrtum.create.AllBlocks;
 import com.zurrtum.create.client.AllExtensions;
 import com.zurrtum.create.client.AllItemTooltips;
+import com.zurrtum.create.client.ponder.foundation.PonderIndex;
+import fr.iglee42.createcasing.client.ponder.EncasedPonders;
 import fr.iglee42.createcasing.CreateCasing;
 import fr.iglee42.createcasing.EncasedClientHooks;
 import fr.iglee42.createcasing.registries.EncasedBlocks;
@@ -39,6 +41,9 @@ public class CreateCasingClient implements ClientModInitializer {
         for (Block block : EncasedBlocks.ALL)
             if (EncasedBlocks.getBase(block) == AllBlocks.CHAIN_CONVEYOR)
                 AllExtensions.BIG_OUTLINE.add(block);
+
+        PonderIndex.addPlugin(new EncasedPonders.CreateScenes());
+        PonderIndex.addPlugin(new EncasedPonders.OwnScenes());
 
         EncasedClientHooks.autoClutchScreen = AutoClutchClient::openScreen;
     }

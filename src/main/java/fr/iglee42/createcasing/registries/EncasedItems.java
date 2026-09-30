@@ -29,6 +29,8 @@ public class EncasedItems {
 
     private static final List<Item> TAB_ITEMS = new ArrayList<>();
     private static final List<Item> TAB_BLOCK_ITEMS = new ArrayList<>();
+    /** Items upstream kept out of the creative tab and recipe viewers. */
+    public static final List<Item> HIDDEN = new ArrayList<>();
 
     public static Item CHORIUM_INGOT;
     public static SequencedAssemblyItem PROCESSING_CHORIUM;
@@ -39,6 +41,7 @@ public class EncasedItems {
     public static void register() {
         CHORIUM_INGOT = register("chorium_ingot", Item::new, new Item.Properties().rarity(Rarity.EPIC), true);
         PROCESSING_CHORIUM = register("processing_chorium", SequencedAssemblyItem::new, new Item.Properties().rarity(Rarity.EPIC), false);
+        HIDDEN.add(PROCESSING_CHORIUM);
         ANDESITE_SHEET = register("andesite_sheet", Item::new, new Item.Properties(), true);
         ZINC_SHEET = register("zinc_sheet", Item::new, new Item.Properties(), true);
     }
@@ -55,7 +58,9 @@ public class EncasedItems {
             int index = TAB_BLOCK_ITEMS.indexOf(gearbox.asItem());
             TAB_BLOCK_ITEMS.add(index + 1, item);
         }
-        TAB_BLOCK_ITEMS.remove(fr.iglee42.createcasing.transmissions.TransmissionSets.MLDEG.getShaft().asItem());
+        Item mldeg = fr.iglee42.createcasing.transmissions.TransmissionSets.MLDEG.getShaft().asItem();
+        TAB_BLOCK_ITEMS.remove(mldeg);
+        HIDDEN.add(mldeg);
     }
 
     public static void registerTab() {
@@ -75,7 +80,9 @@ public class EncasedItems {
         // useBlockDescriptionPrefix keeps the "block.createcasing.*" translation keys of the lang files.
         Item item = factory.apply(block, new Item.Properties().setId(key).useBlockDescriptionPrefix());
         Registry.register(BuiltInRegistries.ITEM, key, item);
-        if (!hidden)
+        if (hidden)
+            HIDDEN.add(item);
+        else
             TAB_BLOCK_ITEMS.add(item);
     }
 

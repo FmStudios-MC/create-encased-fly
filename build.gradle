@@ -132,4 +132,6 @@ fabricApi {
 
 dependencies {
     gametestImplementation fabricApi.module("fabric-client-gametest-api-v1", project.fabric_version)
+    // JEI in the test run only, to check the catalysts
+    gametestImplementation "maven.modrinth:jei:${project.jei_version}"
 }

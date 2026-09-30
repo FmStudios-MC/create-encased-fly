@@ -25,6 +25,9 @@
     ],
     "client": [
       "fr.iglee42.createcasing.client.CreateCasingClient"
+    ],
+    "jei_mod_plugin": [
+      "fr.iglee42.createcasing.client.compat.jei.EncasedJeiPlugin"
     ]
   },
   "accessWidener": "createcasing.classtweaker",
