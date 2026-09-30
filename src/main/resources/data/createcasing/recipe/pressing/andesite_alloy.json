@@ -1,0 +1,9 @@
+{
+  "type": "create:pressing",
+  "results": [
+    {
+      "id": "createcasing:andesite_sheet"
+    }
+  ],
+  "ingredient": "create:andesite_alloy"
+}

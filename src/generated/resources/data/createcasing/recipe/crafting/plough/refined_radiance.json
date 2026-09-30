@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "#c:plates/iron",
+    "C": "create:refined_radiance_casing",
+    "I": "create:andesite_alloy"
+  },
+  "pattern": [
+    "BBB",
+    "III",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:refined_radiance_mechanical_plough"
+  }
+}

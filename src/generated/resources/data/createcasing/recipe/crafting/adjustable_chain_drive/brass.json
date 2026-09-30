@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "createcasing:brass_encased_chain_drive",
+    "create:electron_tube"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:brass_adjustable_chain_gearshift"
+  }
+}

@@ -1,0 +1,135 @@
+plugins {
+    id "net.fabricmc.fabric-loom" version "${loom_version}"
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+loom {
+    // One source set, like the NeoForge original. Client-only code lives under
+    // fr.iglee42.createcasing.client and is only reached from the client entrypoint.
+    accessWidenerPath = file("src/main/resources/createcasing.classtweaker")
+
+    mods {
+        "createcasing" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+// JSONs that Registrate generated for 1.21.1. There is no Registrate on 26.2, so they are kept
+// and migrated to the 26.2 formats instead of being regenerated.
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+sourceSets.main.java {
+    // Datagen only: these produced the JSONs under src/generated. Kept in the tree so upstream
+    // changes to them stay visible in merges.
+    exclude 'fr/iglee42/createcasing/registries/EncasedBlockStateGens.java'
+    exclude 'fr/iglee42/createcasing/registries/EncasedRecipeGens.java'
+    exclude 'fr/iglee42/createcasing/registries/generators/**'
+    // Compat with mods that have no Fabric 26.2 release (KubeJS, Slice and Dice, Farmer's Delight).
+    exclude 'fr/iglee42/createcasing/kubejs/**'
+    exclude 'fr/iglee42/createcasing/compat/sliceanddice/**'
+    exclude 'fr/iglee42/createcasing/mixins/sliceanddice/**'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "Fabric"
+        url = "https://maven.fabricmc.net/"
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    // MC 26.x ships unobfuscated (Mojang names), so there is no remapping and no mod* configurations.
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    // The fabric-api artifact only nests the module jars, so each module used must be named.
+    implementation fabricApi.module("fabric-api-base", project.fabric_version)
+    implementation fabricApi.module("fabric-api-lookup-api-v1", project.fabric_version)
+    implementation fabricApi.module("fabric-command-api-v2", project.fabric_version)
+    implementation fabricApi.module("fabric-creative-tab-api-v1", project.fabric_version)
+    implementation fabricApi.module("fabric-events-interaction-v0", project.fabric_version)
+    implementation fabricApi.module("fabric-lifecycle-events-v1", project.fabric_version)
+    implementation fabricApi.module("fabric-model-loading-api-v1", project.fabric_version)
+    implementation fabricApi.module("fabric-networking-api-v1", project.fabric_version)
+    implementation fabricApi.module("fabric-object-builder-api-v1", project.fabric_version)
+    implementation fabricApi.module("fabric-rendering-v1", project.fabric_version)
+    implementation fabricApi.module("fabric-resource-conditions-api-v1", project.fabric_version)
+    implementation fabricApi.module("fabric-resource-loader-v1", project.fabric_version)
+    implementation fabricApi.module("fabric-transfer-api-v1", project.fabric_version)
+    runtimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    implementation "maven.modrinth:create-fly:${project.create_fly_version}"
+
+    // JEI finds the plugin through the jei_mod_plugin entrypoint; optional at runtime.
+    compileOnly "maven.modrinth:jei:${project.jei_version}"
+}
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    filteringCharset = 'UTF-8'
+
+    def props = [
+            version                 : project.version,
+            loader_version          : project.loader_version,
+            create_fly_version_range: project.create_fly_version_range,
+    ]
+    inputs.properties props
+
+    filesMatching("fabric.mod.json") {
+        expand props
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = 'UTF-8'
+    it.options.release = 25
+    // While porting, the full error list is the worklist, not javac's default first 100.
+    it.options.compilerArgs << '-Xmaxerrs' << '10000'
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.archives_base_name}" }
+    }
+}
+
+// Automated in-game checks: ./gradlew runClientGameTest builds test scenes, logs
+// ENCASED-TEST PASS/FAIL lines and saves screenshots. Not shipped.
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = "createcasing_gametest"
+        enableGameTests = false
+        enableClientGameTests = true
+        eula = true
+    }
+}
+
+dependencies {
+    gametestImplementation fabricApi.module("fabric-client-gametest-api-v1", project.fabric_version)
+}

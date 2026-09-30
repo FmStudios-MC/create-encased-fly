@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "createcasing:andesite_fluid_pipe",
+    "#c:plates/iron"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:andesite_fluid_valve"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "create:industrial_iron_block",
+    "create:shaft",
+    "#c:dusts/redstone"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:industrial_iron_clutch"
+  }
+}

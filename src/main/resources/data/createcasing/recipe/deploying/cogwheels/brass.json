@@ -1,0 +1,10 @@
+{
+  "type": "create:deploying",
+  "results": [
+    {
+      "id": "createcasing:brass_cogwheel"
+    }
+  ],
+  "target": "create:shaft",
+  "ingredient": "#c:ingots/brass"
+}

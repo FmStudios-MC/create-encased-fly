@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "create:shaft",
+    "create:andesite_alloy",
+    "create:andesite_alloy"
+  ],
+  "result": {
+    "id": "createcasing:andesite_large_cogwheel"
+  }
+}

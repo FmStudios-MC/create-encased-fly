@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "create:copper_casing",
+    "#c:nuggets/iron",
+    "#c:nuggets/iron",
+    "#c:nuggets/iron"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:copper_encased_chain_drive"
+  }
+}

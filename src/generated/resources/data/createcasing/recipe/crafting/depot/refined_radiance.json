@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "create:andesite_alloy",
+    "create:refined_radiance_casing"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:refined_radiance_depot"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "create:weathered_iron_block",
+    "create:cogwheel",
+    "#c:dusts/redstone"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:weathered_iron_gearshift"
+  }
+}

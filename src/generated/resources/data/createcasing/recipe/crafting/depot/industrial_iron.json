@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "create:andesite_alloy",
+    "create:industrial_iron_block"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:industrial_iron_depot"
+  }
+}

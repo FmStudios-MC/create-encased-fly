@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#c:ingots/brass",
+    "I": "#c:plates/gold"
+  },
+  "pattern": [
+    "I",
+    "C"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:brass_steam_whistle"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "create:railway_casing",
+    "create:chute"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:railway_portable_storage_interface"
+  }
+}

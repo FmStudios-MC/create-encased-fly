@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "create:large_cogwheel",
+    "C": "create:brass_casing"
+  },
+  "pattern": [
+    " C ",
+    "CAC",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:brass_chain_conveyor"
+  }
+}

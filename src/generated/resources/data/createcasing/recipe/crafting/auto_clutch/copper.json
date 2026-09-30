@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "create:copper_casing",
+    "create:shaft",
+    "minecraft:compass"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:copper_automatic_clutch"
+  }
+}

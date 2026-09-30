@@ -1,0 +1,10 @@
+{
+  "type": "create:deploying",
+  "results": [
+    {
+      "id": "createcasing:zinc_large_cogwheel"
+    }
+  ],
+  "target": "createcasing:zinc_cogwheel",
+  "ingredient": "#c:ingots/zinc"
+}

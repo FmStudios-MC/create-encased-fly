@@ -1,0 +1,10 @@
+{
+  "type": "create:item_application",
+  "results": [
+    {
+      "id": "createcasing:creative_casing"
+    }
+  ],
+  "target": "create:industrial_iron_block",
+  "ingredient": "createcasing:chorium_ingot"
+}

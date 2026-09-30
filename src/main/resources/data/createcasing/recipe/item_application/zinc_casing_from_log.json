@@ -1,0 +1,10 @@
+{
+  "type": "create:item_application",
+  "results": [
+    {
+      "id": "createcasing:zinc_casing"
+    }
+  ],
+  "target": "#c:stripped_logs",
+  "ingredient": "#c:ingots/zinc"
+}

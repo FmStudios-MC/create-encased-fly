@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "create:railway_casing",
+    "#c:nuggets/iron",
+    "#c:nuggets/iron",
+    "#c:nuggets/iron"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:railway_encased_chain_drive"
+  }
+}

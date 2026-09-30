@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "create:shaft",
+    "#c:ingots/zinc"
+  ],
+  "result": {
+    "id": "createcasing:zinc_cogwheel"
+  }
+}

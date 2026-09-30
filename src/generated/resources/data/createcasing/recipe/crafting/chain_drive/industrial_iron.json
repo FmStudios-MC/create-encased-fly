@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "create:industrial_iron_block",
+    "#c:nuggets/iron",
+    "#c:nuggets/iron",
+    "#c:nuggets/iron"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:industrial_iron_encased_chain_drive"
+  }
+}

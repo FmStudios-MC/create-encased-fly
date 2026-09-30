@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "#c:plates/iron",
+    "C": "create:refined_radiance_casing",
+    "I": "#c:ingots/iron"
+  },
+  "pattern": [
+    " B ",
+    "BIB",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:refined_radiance_mechanical_saw"
+  }
+}

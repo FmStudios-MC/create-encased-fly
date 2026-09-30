@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "create:brass_casing",
+    "C": "create:large_cogwheel"
+  },
+  "pattern": [
+    " C ",
+    "CAC",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:brass_configurable_gearbox"
+  }
+}

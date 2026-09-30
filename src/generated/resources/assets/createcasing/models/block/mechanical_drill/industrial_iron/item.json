@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/mechanical_drill/item",
+  "textures": {
+    "10": "createcasing:block/casing_very_short/industrial_iron",
+    "gearbox": "createcasing:block/gearbox/industrial_iron",
+    "gearbox_top": "createcasing:block/gearbox_top/industrial_iron",
+    "particle": "createcasing:block/gearbox/industrial_iron"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "create:large_cogwheel",
+    "C": "create:weathered_iron_block"
+  },
+  "pattern": [
+    " C ",
+    "CAC",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:weathered_iron_chain_conveyor"
+  }
+}

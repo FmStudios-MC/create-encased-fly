@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "#c:ingots/iron",
+    "C": "create:shadow_steel_casing",
+    "I": "create:andesite_alloy"
+  },
+  "pattern": [
+    " I ",
+    "IBI",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:shadow_steel_mechanical_drill"
+  }
+}

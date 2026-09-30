@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "create:andesite_alloy",
+    "create:copper_casing"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:copper_depot"
+  }
+}

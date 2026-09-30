@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "create:andesite_alloy",
+    "createcasing:creative_casing"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:creative_depot"
+  }
+}

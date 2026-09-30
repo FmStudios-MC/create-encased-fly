@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "create:electron_tube",
+    "C": "create:brass_casing",
+    "I": "create:brass_hand"
+  },
+  "pattern": [
+    "B",
+    "C",
+    "I"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:brass_deployer"
+  }
+}

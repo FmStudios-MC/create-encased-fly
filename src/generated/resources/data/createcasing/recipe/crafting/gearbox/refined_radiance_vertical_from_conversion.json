@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "createcasing:refined_radiance_gearbox"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:vertical_refined_radiance_gearbox"
+  }
+}

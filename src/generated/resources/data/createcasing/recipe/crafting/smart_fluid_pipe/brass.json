@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "#c:plates/brass",
+    "I": "createcasing:brass_fluid_pipe",
+    "S": "create:electron_tube"
+  },
+  "pattern": [
+    "B",
+    "I",
+    "S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:brass_smart_fluid_pipe"
+  }
+}

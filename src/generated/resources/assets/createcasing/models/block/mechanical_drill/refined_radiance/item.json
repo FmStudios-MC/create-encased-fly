@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/mechanical_drill/item",
+  "textures": {
+    "10": "createcasing:block/casing_very_short/refined_radiance",
+    "gearbox": "createcasing:block/gearbox/refined_radiance",
+    "gearbox_top": "createcasing:block/gearbox_top/refined_radiance",
+    "particle": "createcasing:block/gearbox/refined_radiance"
+  }
+}

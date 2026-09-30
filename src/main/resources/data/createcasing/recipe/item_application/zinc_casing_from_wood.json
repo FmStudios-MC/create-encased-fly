@@ -1,0 +1,10 @@
+{
+  "type": "create:item_application",
+  "results": [
+    {
+      "id": "createcasing:zinc_casing"
+    }
+  ],
+  "target": "#c:stripped_woods",
+  "ingredient": "#c:ingots/zinc"
+}

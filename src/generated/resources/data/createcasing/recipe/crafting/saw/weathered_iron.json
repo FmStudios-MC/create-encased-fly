@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "#c:plates/iron",
+    "C": "create:weathered_iron_block",
+    "I": "#c:ingots/iron"
+  },
+  "pattern": [
+    " B ",
+    "BIB",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:weathered_iron_mechanical_saw"
+  }
+}

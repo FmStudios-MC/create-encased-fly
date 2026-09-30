@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "create:cogwheel",
+    "C": "create:refined_radiance_casing",
+    "I": "create:whisk"
+  },
+  "pattern": [
+    "B",
+    "C",
+    "I"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:refined_radiance_mixer"
+  }
+}

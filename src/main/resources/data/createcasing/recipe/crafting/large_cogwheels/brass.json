@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "create:shaft",
+    "#c:ingots/brass",
+    "#c:ingots/brass"
+  ],
+  "result": {
+    "id": "createcasing:brass_large_cogwheel"
+  }
+}

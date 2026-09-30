@@ -1,0 +1,10 @@
+{
+  "type": "create:deploying",
+  "results": [
+    {
+      "id": "createcasing:andesite_cogwheel"
+    }
+  ],
+  "target": "create:shaft",
+  "ingredient": "create:andesite_alloy"
+}

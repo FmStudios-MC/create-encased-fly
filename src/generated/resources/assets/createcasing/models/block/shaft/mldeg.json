@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/shaft",
+  "textures": {
+    "0": "createcasing:block/shaft/mldeg",
+    "1": "createcasing:block/shaft/mldeg",
+    "particle": "createcasing:block/shaft/mldeg"
+  }
+}

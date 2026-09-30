@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "create:refined_radiance_casing",
+    "create:cogwheel",
+    "#c:dusts/redstone"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:refined_radiance_gearshift"
+  }
+}

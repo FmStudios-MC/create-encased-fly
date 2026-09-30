@@ -1,0 +1,10 @@
+{
+  "type": "create:deploying",
+  "results": [
+    {
+      "id": "createcasing:copper_large_cogwheel"
+    }
+  ],
+  "target": "createcasing:copper_cogwheel",
+  "ingredient": "#c:ingots/copper"
+}

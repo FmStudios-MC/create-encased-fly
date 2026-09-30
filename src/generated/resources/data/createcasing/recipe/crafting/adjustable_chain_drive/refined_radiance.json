@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "createcasing:refined_radiance_encased_chain_drive",
+    "create:electron_tube"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:refined_radiance_adjustable_chain_gearshift"
+  }
+}

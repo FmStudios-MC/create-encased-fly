@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A",
+    "A"
+  ],
+  "key": {
+    "A": "minecraft:stripped_crimson_stem"
+  },
+  "result": {
+    "id": "createcasing:crimson_shaft",
+    "count": 8
+  }
+}

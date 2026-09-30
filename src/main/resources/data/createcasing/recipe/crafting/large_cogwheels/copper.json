@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "create:shaft",
+    "#c:ingots/copper",
+    "#c:ingots/copper"
+  ],
+  "result": {
+    "id": "createcasing:copper_large_cogwheel"
+  }
+}

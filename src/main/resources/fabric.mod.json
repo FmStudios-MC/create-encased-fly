@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "createcasing",
+  "version": "${version}",
+  "name": "Create Encased (Fly Port)",
+  "description": "Unofficial Fabric / Minecraft 26.2 port of Create Encased by iglee42: Create's machines, shafts, cogwheels and fluid blocks in every casing. Built on ZurrTum's Create Fly. Not made, maintained or supported by iglee42.",
+  "authors": [
+    "iglee42"
+  ],
+  "contributors": [
+    "FabiMvurice Interactive (Fabric / 26.2 port)",
+    "ZurrTum (Create Fly)"
+  ],
+  "contact": {
+    "homepage": "https://github.com/FmStudios-MC/create-encased-fly",
+    "sources": "https://github.com/FmStudios-MC/create-encased-fly",
+    "issues": "https://github.com/FmStudios-MC/create-encased-fly/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/createcasing/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "fr.iglee42.createcasing.CreateCasing"
+    ],
+    "client": [
+      "fr.iglee42.createcasing.client.CreateCasingClient"
+    ]
+  },
+  "accessWidener": "createcasing.classtweaker",
+  "mixins": [
+    "createcasing.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": ">=26.2- <26.3-",
+    "java": ">=25",
+    "fabric-api": "*",
+    "create": "${create_fly_version_range}"
+  }
+}

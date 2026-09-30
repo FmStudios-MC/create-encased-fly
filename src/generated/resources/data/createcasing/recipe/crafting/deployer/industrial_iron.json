@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "create:electron_tube",
+    "C": "create:industrial_iron_block",
+    "I": "create:brass_hand"
+  },
+  "pattern": [
+    "B",
+    "C",
+    "I"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:industrial_iron_deployer"
+  }
+}

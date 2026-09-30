@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": "create:andesite_alloy",
+    "S": "#c:plates/brass"
+  },
+  "pattern": [
+    "SSS",
+    " I "
+  ],
+  "result": {
+    "count": 1,
+    "id": "createcasing:brass_valve_handle"
+  }
+}
