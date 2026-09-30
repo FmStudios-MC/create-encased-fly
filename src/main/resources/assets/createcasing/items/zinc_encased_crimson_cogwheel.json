@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "create:model/normal",
+    "model": "createcasing:item/zinc_encased_crimson_cogwheel"
+  }
+}

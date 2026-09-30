@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "create:model/normal",
+    "model": "createcasing:item/refined_radiance_encased_fan"
+  }
+}

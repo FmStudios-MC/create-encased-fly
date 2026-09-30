@@ -5,6 +5,6 @@
     "4": "createcasing:block/gearbox/weathered_iron",
     "casing": "create:block/weathered_iron_block",
     "particle": "create:block/weathered_iron_block",
-    "side": "createcasing:block/encased_cogwheel/weathered_iron_connected"
+    "side": "createcasing:block/encased_cogwheel/weathered_iron_connected/3"
   }
 }

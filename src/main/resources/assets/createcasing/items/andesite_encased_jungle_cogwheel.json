@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "create:model/normal",
+    "model": "createcasing:item/andesite_encased_jungle_cogwheel"
+  }
+}

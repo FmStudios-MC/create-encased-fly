@@ -5,6 +5,6 @@
     "4": "createcasing:block/gearbox/refined_radiance",
     "casing": "create:block/refined_radiance_casing",
     "particle": "create:block/refined_radiance_casing",
-    "side": "createcasing:block/encased_cogwheel/refined_radiance_connected"
+    "side": "createcasing:block/encased_cogwheel/refined_radiance_connected/3"
   }
 }

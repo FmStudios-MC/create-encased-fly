@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "create:model/normal",
+    "model": "createcasing:item/shadow_steel_encased_zinc_large_cogwheel"
+  }
+}

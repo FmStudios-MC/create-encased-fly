@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "create:model/normal",
+    "model": "createcasing:item/weathered_iron_encased_jungle_cogwheel"
+  }
+}

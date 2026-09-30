@@ -5,6 +5,6 @@
     "4": "createcasing:block/gearbox/industrial_iron",
     "casing": "create:block/industrial_iron_block",
     "particle": "create:block/industrial_iron_block",
-    "side": "createcasing:block/encased_cogwheel/industrial_iron_connected"
+    "side": "createcasing:block/encased_cogwheel/industrial_iron_connected/3"
   }
 }

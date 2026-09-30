@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "create:model/normal",
+    "model": "createcasing:item/creative_encased_cherry_large_cogwheel"
+  }
+}

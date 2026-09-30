@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "create:model/normal",
+    "model": "createcasing:item/brass_encased_acacia_large_cogwheel"
+  }
+}

@@ -5,6 +5,6 @@
     "4": "createcasing:block/gearbox/zinc",
     "casing": "createcasing:block/casing/zinc",
     "particle": "createcasing:block/casing/zinc",
-    "side": "createcasing:block/encased_cogwheel/zinc_connected"
+    "side": "createcasing:block/encased_cogwheel/zinc_connected/3"
   }
 }

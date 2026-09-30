@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "create:model/normal",
+    "model": "createcasing:item/shadow_steel_portable_storage_interface"
+  }
+}

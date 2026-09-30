@@ -5,6 +5,6 @@
     "4": "createcasing:block/gearbox/copper",
     "casing": "create:block/copper_casing",
     "particle": "create:block/copper_casing",
-    "side": "createcasing:block/encased_cogwheel/copper_connected"
+    "side": "createcasing:block/encased_cogwheel/copper_connected/3"
   }
 }

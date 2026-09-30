@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "createcasing_gametest",
+  "version": "1.0.0",
+  "name": "Create Encased checks",
+  "environment": "client",
+  "entrypoints": {
+    "fabric-client-gametest": [
+      "fr.iglee42.createcasing.gametest.GameplayCheck",
+      "fr.iglee42.createcasing.gametest.RenderCheck"
+    ]
+  },
+  "depends": {
+    "createcasing": "*"
+  }
+}

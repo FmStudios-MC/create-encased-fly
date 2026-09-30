@@ -1,6 +1,10 @@
 package fr.iglee42.createcasing.registries;
 
+import com.zurrtum.create.AllTransfer;
+import com.zurrtum.create.api.behaviour.BlockEntityBehaviour;
 import com.zurrtum.create.content.fluids.tank.FluidTankBlockEntity;
+import com.zurrtum.create.foundation.blockEntity.behaviour.CachedFluidInventoryBehaviour;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import com.zurrtum.create.content.kinetics.simpleRelays.SimpleKineticBlockEntity;
 import com.zurrtum.create.foundation.block.IBE;
 import fr.iglee42.createcasing.CreateCasing;
@@ -78,5 +82,21 @@ public class EncasedBlockEntities {
             if (block instanceof IBE<?> ibe)
                 ((FabricBlockEntityType) ibe.getBlockEntityType()).addValidBlock(block);
         }
+        registerTransfer();
+    }
+
+    /**
+     * Create Fly exposes tanks to Fabric's transfer API per block entity type; the mod's tank type
+     * gets the same registration as Create's {@code FLUID_TANK} in {@code AllTransfer}.
+     */
+    private static void registerTransfer() {
+        if (AllTransfer.DISABLE)
+            return;
+        BlockEntityBehaviour.add(FLUID_TANK, be -> new CachedFluidInventoryBehaviour<>(be, tank -> {
+            if (tank.fluidCapability == null)
+                tank.refreshCapability();
+            return tank.fluidCapability;
+        }));
+        FluidStorage.SIDED.registerForBlockEntity(CachedFluidInventoryBehaviour::get, FLUID_TANK);
     }
 }

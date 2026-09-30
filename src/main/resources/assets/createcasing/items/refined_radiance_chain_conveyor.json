@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "create:model/oversized",
+    "min": [
+      -0.6281853914260864,
+      -0.4237504303455353,
+      -0.5686479806900024
+    ],
+    "max": [
+      0.6218146085739136,
+      0.5762495696544647,
+      0.5552072525024414
+    ],
+    "model": "createcasing:item/refined_radiance_chain_conveyor"
+  }
+}

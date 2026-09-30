@@ -3,6 +3,7 @@
     "parent": "block/block",
     "textures": {
         "5": "createcasing:block/creative_cogwheel",
+        "particle": "createcasing:block/creative_cogwheel",
         "1_2": "create:block/cogwheel"
     },
     "elements": [
