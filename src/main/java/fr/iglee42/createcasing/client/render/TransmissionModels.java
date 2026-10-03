@@ -9,15 +9,16 @@ import fr.iglee42.createcasing.transmissions.TransmissionSet;
 import fr.iglee42.createcasing.transmissions.TransmissionSets;
 import net.minecraft.world.level.block.Block;
 
-import java.util.IdentityHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Partial models of the mod's shafts and cogwheels, looked up by block. Upstream derived the set
  * name from the block id on every frame; the lookup is cached here.
  */
 public final class TransmissionModels {
-    private static final Map<Block, String> NAMES = new IdentityHashMap<>();
+    /** Filled from the render thread and from Flywheel's worker threads, hence concurrent. */
+    private static final Map<Block, String> NAMES = new ConcurrentHashMap<>();
 
     private TransmissionModels() {
     }

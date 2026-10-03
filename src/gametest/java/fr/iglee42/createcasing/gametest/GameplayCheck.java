@@ -29,6 +29,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -52,6 +54,7 @@ public class GameplayCheck implements FabricClientGameTest {
     static final BlockPos BRASS_DRIVE_A = new BlockPos(20, Y, 0), BRASS_DRIVE_B = new BlockPos(20, Y, 1), COPPER_DRIVE = new BlockPos(20, Y, 2);
     static final BlockPos TANK = new BlockPos(24, Y, 0), CREATE_TANK = new BlockPos(25, Y, 0), ENGINE = new BlockPos(24, Y, -1);
     static final BlockPos SWAP = new BlockPos(28, Y, 0), ENCASE = new BlockPos(30, Y, 0), BELT = new BlockPos(32, Y, 0);
+    static final BlockPos POWERED_SWAP = new BlockPos(28, Y, 3);
 
     private final List<String> failures = new ArrayList<>();
 
@@ -109,6 +112,8 @@ public class GameplayCheck implements FabricClientGameTest {
 
             set(server, SWAP, "createcasing:railway_press[facing=north]");
             set(server, ENCASE, "createcasing:oak_shaft[axis=x]");
+            set(server, POWERED_SWAP.south(), "minecraft:redstone_block");
+            set(server, POWERED_SWAP, "createcasing:railway_clutch[axis=x,powered=true]");
             set(server, BELT, "create:shaft[axis=z]");
             set(server, BELT.east(2), "create:shaft[axis=z]");
             context.waitTicks(5);
@@ -130,6 +135,7 @@ public class GameplayCheck implements FabricClientGameTest {
                 ServerPlayer player = level.players().getFirst();
                 use(level, player, SWAP, new ItemStack(CasingSets.COPPER.getCasing()));
                 use(level, player, ENCASE, new ItemStack(AllBlocks.BRASS_CASING));
+                use(level, player, POWERED_SWAP, new ItemStack(CasingSets.COPPER.getCasing()));
                 use(level, player, BELT, new ItemStack(CasingSets.RAILWAY.getCasing()));
             });
             context.waitTicks(60);
@@ -177,6 +183,11 @@ public class GameplayCheck implements FabricClientGameTest {
                 return "tank " + tank + (tank ? "" : " FAIL");
             });
             check(server, "copper casing turns a railway press into a copper press", level -> id(level, SWAP).equals("createcasing:copper_press") ? id(level, SWAP) : id(level, SWAP) + " FAIL");
+            check(server, "powered clutch stays powered through a casing swap", level -> {
+                BlockState state = level.getBlockState(POWERED_SWAP);
+                String result = id(level, POWERED_SWAP) + " powered=" + state.getValueOrElse(BlockStateProperties.POWERED, false);
+                return result.equals("createcasing:copper_clutch powered=true") ? result : result + " FAIL";
+            });
             check(server, "brass casing encases an oak shaft", level -> id(level, ENCASE).equals("createcasing:brass_encased_oak_shaft") ? id(level, ENCASE) : id(level, ENCASE) + " FAIL");
             check(server, "railway casing on a belt", level -> beltCasing(level, "railway"));
             check(server, "railway press has Create's press stress", level -> {

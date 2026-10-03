@@ -2,10 +2,10 @@
 
 ## State
 
-**Done, 2026-09-30.** Everything upstream had is ported except the integrations with mods that
+**Done, 2026-09-30; first full release `1.9.0-ht3-fly.26.2` on 2026-10-03.** Everything upstream had is ported except the integrations with mods that
 have no Fabric 26.2 release (KubeJS, Slice and Dice, Farmer's Delight) and REI. All 743 blocks
 register (upstream's 751 minus the 8 Slice and Dice slicers), render, and load their data.
-`./gradlew runClientGameTest` passes all 24 gameplay checks and the render check (see *Testing*);
+`./gradlew runClientGameTest` passes all 25 gameplay checks and the render check (see *Testing*);
 a dedicated server (`runServer`) reaches `Done` with no errors.
 
 Still only checkable by playing: balance, every one of the 743 blocks in motion, contraptions with
@@ -112,13 +112,16 @@ capabilities and block checks accept them. Here:
   missing files (`encased_cogwheel/shadow`, `/radiance`); the port uses the sheets that exist.
 - Pipes draw rims towards the mod's encased pipes like towards Create's (upstream only patched
   the hose pulley half of that check).
+- Casing and material swaps keep `powered` and `waterlogged` (upstream reset them, so a powered
+  clutch came back engaged until the next redstone update) and need a player who may build
+  (Fabric's `UseBlockCallback` runs before the adventure mode check).
 
 ## Testing
 
 - `./gradlew runServer`: dedicated server; checks data loading and that no client class is
   reached on the server. `run/eula.txt` is accepted.
 - `./gradlew runClientGameTest` (about 2 minutes) runs:
-  - `GameplayCheck`: 24 `ENCASED-TEST PASS/FAIL` checks, fails the run on any failure. Rotation
+  - `GameplayCheck`: 25 `ENCASED-TEST PASS/FAIL` checks, fails the run on any failure. Rotation
     through every shaft kind, cogwheels, configurable gearbox, automatic clutch; chain drives
     joining only their casing; tank multiblocks and the steam engine; the transfer API; casing swap
     and encasing through a real `useItemOn`; a railway belt casing; stress and capacity equal to

@@ -21,6 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.jspecify.annotations.Nullable;
 
@@ -39,7 +40,8 @@ public class ItemChangeBlockManager {
     public static void register() {
         UseBlockCallback.EVENT.register((player, level, hand, hitResult) -> {
             ItemStack stack = player.getItemInHand(hand);
-            if (stack.isEmpty() || player.isSpectator())
+            // Fabric runs this before the game mode checks; adventure mode must not rebuild machines.
+            if (stack.isEmpty() || player.isSpectator() || !player.mayBuild())
                 return InteractionResult.PASS;
             BlockPos pos = hitResult.getBlockPos();
             BlockState state = level.getBlockState(pos);
@@ -56,7 +58,7 @@ public class ItemChangeBlockManager {
                 return InteractionResult.PASS;
             BlockState newState = swapCasing(level, pos, state, casingSet, face);
             if (newState != null)
-                return changeBlock(level, pos, newState);
+                return changeBlock(level, pos, keepStateFlags(state, newState));
         }
 
         TransmissionSet transmissionSet = getSetForItem(item);
@@ -71,7 +73,7 @@ public class ItemChangeBlockManager {
             else if (isElementInSet(state, TransmissionSet::getLargeCogwheel))
                 target = transmissionSet.getLargeCogwheel();
             if (target != null && state.getBlock() instanceof RotatedPillarKineticBlock)
-                return changeBlock(level, pos, target.defaultBlockState().setValue(AXIS, state.getValue(AXIS)));
+                return changeBlock(level, pos, keepStateFlags(state, target.defaultBlockState().setValue(AXIS, state.getValue(AXIS))));
         }
         return InteractionResult.PASS;
     }
@@ -122,6 +124,19 @@ public class ItemChangeBlockManager {
         if (!state.hasProperty(property))
             return null;
         return newState.setValue(property, state.getValue(property));
+    }
+
+    /**
+     * Keeps redstone power and water across a swap: a powered clutch or gearshift would otherwise
+     * come back engaged until its next neighbour update, and a waterlogged shaft would lose its
+     * water. Upstream only carried the facing over.
+     */
+    private static BlockState keepStateFlags(BlockState state, BlockState newState) {
+        for (BooleanProperty property : new BooleanProperty[]{POWERED, WATERLOGGED}) {
+            if (state.hasProperty(property) && newState.hasProperty(property))
+                newState = newState.setValue(property, state.getValue(property));
+        }
+        return newState;
     }
 
     private static InteractionResult changeBlock(Level level, BlockPos pos, BlockState newState) {
