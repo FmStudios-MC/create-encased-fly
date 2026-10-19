@@ -8,3 +8,7 @@ accessible field net/minecraft/client/renderer/blockentity/state/BlockEntityRend
 # Fabric's addValidBlock; EncasedBlockEntities swaps such sets back to mutable ones.
 accessible field net/minecraft/world/level/block/entity/BlockEntityType validBlocks Ljava/util/Set;
 mutable field net/minecraft/world/level/block/entity/BlockEntityType validBlocks Ljava/util/Set;
+
+# 26.1.2 keeps BlockEntityType's constructor private (26.2 opened it); Create Fly widens it the same way.
+accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
+accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;Ljava/util/Set;)V

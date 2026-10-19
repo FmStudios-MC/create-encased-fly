@@ -25,7 +25,7 @@ public class RenderCheck implements FabricClientGameTest {
     @Override
     public void runTest(ClientGameTestContext context) {
         try (TestSingleplayerContext singleplayer = context.worldBuilder().setUseConsistentSettings(true).create()) {
-            singleplayer.getConnection().waitForChunksRender();
+            singleplayer.getClientLevel().waitForChunksRender();
             TestServerContext server = singleplayer.getServer();
             server.runCommand("gamemode creative @p");
             context.runOnClient(mc -> mc.player.getAbilities().flying = true);
@@ -50,7 +50,7 @@ public class RenderCheck implements FabricClientGameTest {
                     int cz = band * 2 + 4;
                     look(context, server, cx, Y + 6, cz - 9, cx, Y, cz);
                     context.waitTicks(30);
-                    singleplayer.getConnection().waitForChunksRender();
+                    singleplayer.getClientLevel().waitForChunksRender();
                     context.takeScreenshot("grid_rows_" + band + "_" + half);
                 }
             }
@@ -108,7 +108,7 @@ public class RenderCheck implements FabricClientGameTest {
         context.waitTicks(40);
         look(context, server, 9, Y + 4, z + 8, 9, Y, z + 1);
         context.waitTicks(20);
-        singleplayer.getConnection().waitForChunksRender();
+        singleplayer.getClientLevel().waitForChunksRender();
         context.takeScreenshot("driven_a");
         context.waitTicks(5);
         context.takeScreenshot("driven_b");
@@ -134,16 +134,16 @@ public class RenderCheck implements FabricClientGameTest {
             int cx = part * 10 + 4;
             look(context, server, cx, Y + 3, z - 5, cx, Y, z + 2);
             context.waitTicks(20);
-            singleplayer.getConnection().waitForChunksRender();
+            singleplayer.getClientLevel().waitForChunksRender();
             context.takeScreenshot("close_" + part);
         }
         look(context, server, 1, Y + 2, z - 3, 1, Y, z);
         context.waitTicks(20);
-        singleplayer.getConnection().waitForChunksRender();
+        singleplayer.getClientLevel().waitForChunksRender();
         context.takeScreenshot("close_railway_mixer_press");
         look(context, server, 4.5, Y + 2, z - 3, 5, Y, z);
         context.waitTicks(20);
-        singleplayer.getConnection().waitForChunksRender();
+        singleplayer.getClientLevel().waitForChunksRender();
         context.takeScreenshot("close_railway_drill_saw");
     }
 

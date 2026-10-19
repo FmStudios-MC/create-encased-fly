@@ -62,7 +62,7 @@ public class GameplayCheck implements FabricClientGameTest {
     public void runTest(ClientGameTestContext context) {
         TestWorldSave save;
         try (TestSingleplayerContext singleplayer = context.worldBuilder().setUseConsistentSettings(true).create()) {
-            singleplayer.getConnection().waitForChunksRender();
+            singleplayer.getClientLevel().waitForChunksRender();
             TestServerContext server = singleplayer.getServer();
             save = singleplayer.getWorldSave();
             server.runCommand("gamemode creative @p");
@@ -223,7 +223,7 @@ public class GameplayCheck implements FabricClientGameTest {
         }
 
         try (TestSingleplayerContext singleplayer = save.open()) {
-            singleplayer.getConnection().waitForChunksRender();
+            singleplayer.getClientLevel().waitForChunksRender();
             TestServerContext server = singleplayer.getServer();
             context.waitTicks(20);
             check(server, "belt casing survives save and reload", level -> beltCasing(level, "railway"));

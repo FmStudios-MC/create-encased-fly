@@ -14,13 +14,28 @@ the mod's drills/saws/rollers, the automatic clutch screen, belts with every cas
 | | |
 |---|---|
 | Upstream | https://github.com/iglee42/CreateCasing, branch `1.21.1/main` (1.9.0-ht3, commit `f584aaab`) |
-| Target | Minecraft 26.2, Fabric Loader 0.19.3, Fabric API 0.160.0+26.2 |
-| Create Fly | `maven.modrinth:create-fly:26.2-rc-2-6.0.9-1` |
-| Optional | JEI 30.26.0.182 (Modrinth id `x6nG9OT2`) |
+| Target | Minecraft 26.1.2, Fabric Loader 0.19.3, Fabric API 0.155.3+26.1.2 |
+| Create Fly | `maven.modrinth:create-fly:26.1.2-6.0.9-4` |
+| Optional | JEI 29.47.0.111 (Modrinth id `b5BXTIh2`) |
 | Licence | MIT: keep `LICENSE` with iglee42's copyright notice |
 
 Mod id (`createcasing`), package (`fr.iglee42.createcasing`) and all block and item ids are
 unchanged, so recipes and data packs written for upstream apply.
+
+### Branch `26.1.2`
+
+A backport of the 26.2 port (`master`) to Minecraft 26.1.2, version `1.9.0-ht3-fly.26.1.2`.
+Create Fly's assets and data are identical between `26.1.2-6.0.9-4` and `26.2-rc-2-6.0.9-1`, so
+every JSON under `src/` is unchanged. Code differences:
+
+- `BlockEntityType`'s constructor and `BlockEntitySupplier` are private in 26.1.2: widened in
+  `createcasing.classtweaker`, as Create Fly does.
+- Create Fly's `CogwheelBlockItem` takes a `CogWheelBlock`, not a `Block`: `EncasedBlocks` casts.
+- Fabric API's client gametest API names the client world `getClientLevel()` (26.2:
+  `getConnection()`).
+
+All mixin targets exist with the same signatures; `runClientGameTest` passes all 25 checks.
+On this branch read Create Fly's `26.1.2-6.0.9-4` sources jar (on Modrinth), not `create-fly-rc2-src`.
 
 **Read `../create-fly-rc2-src/` for Create Fly code, not `../create-fly/`.** The latter is Create
 Fly's master branch and differs a lot from the rc-2 jar this compiles against (encased cogwheel
