@@ -27,7 +27,7 @@ import java.util.Set;
  * Upstream registered one type per block kind (press, mixer, depot, ...) only because its blocks
  * could not join Create's types, and then patched Create's renderers, transfer lookups and block
  * checks to accept them. Here every block joins the type its block class asks for through
- * {@link FabricBlockEntityType#addValidBlock}, so most blocks simply use Create Fly's types
+ * {@link FabricBlockEntityType#addSupportedBlock}, so most blocks simply use Create Fly's types
  * (and with them its renderers, visuals, client behaviours and fluid/item lookups). The types
  * below are the ones with no Create counterpart, or whose Create class fixes its type.
  * <p>
@@ -93,7 +93,7 @@ public class EncasedBlockEntities {
     private static void addValidBlock(BlockEntityType<?> type, Block block) {
         if (!(type.validBlocks instanceof HashSet))
             type.validBlocks = new HashSet<>(type.validBlocks);
-        ((FabricBlockEntityType) type).addValidBlock(block);
+        ((FabricBlockEntityType) type).addSupportedBlock(block);
     }
 
     /**

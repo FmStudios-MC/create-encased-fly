@@ -1,6 +1,6 @@
 {
   "model": {
-    "type": "create:model/normal",
+    "type": "minecraft:model",
     "model": "createcasing:item/cherry_large_cogwheel"
   }
 }

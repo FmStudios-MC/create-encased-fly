@@ -1,6 +1,6 @@
 {
   "model": {
-    "type": "create:model/normal",
+    "type": "minecraft:model",
     "model": "createcasing:item/andesite_encased_andesite_cogwheel"
   }
 }

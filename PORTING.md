@@ -1,4 +1,4 @@
-# Porting notes: Create Encased → Create Fly (Fabric, MC 26.2)
+# Porting notes: Create Encased → Create Fly (Fabric, MC 26.2, ported back to 1.21.11)
 
 ## State
 
@@ -14,13 +14,61 @@ the mod's drills/saws/rollers, the automatic clutch screen, belts with every cas
 | | |
 |---|---|
 | Upstream | https://github.com/iglee42/CreateCasing, branch `1.21.1/main` (1.9.0-ht3, commit `f584aaab`) |
-| Target | Minecraft 26.2, Fabric Loader 0.19.3, Fabric API 0.160.0+26.2 |
-| Create Fly | `maven.modrinth:create-fly:26.2-rc-2-6.0.9-1` |
-| Optional | JEI 30.26.0.182 (Modrinth id `x6nG9OT2`) |
+| Target | Minecraft 1.21.11 (Mojang mappings, remapped to intermediary), Fabric Loader 0.18.4, Fabric API 0.141.6+1.21.11 |
+| Create Fly | `maven.modrinth:create-fly:1.21.11-6.0.9-5` |
+| Optional | JEI 27.7.0.30 (Modrinth id `Mia233qP`) |
 | Licence | MIT: keep `LICENSE` with iglee42's copyright notice |
 
 Mod id (`createcasing`), package (`fr.iglee42.createcasing`) and all block and item ids are
 unchanged, so recipes and data packs written for upstream apply.
+
+### Branch `1.21.11`
+
+A backport of the 26.2 port (`master`, by way of the `26.1.2` changes) to Minecraft 1.21.11,
+version `1.9.0-ht3-fly.1.21.11`. Create Fly `1.21.11-6.0.9-5` is built from Create Fly's
+`1.21.11_obfuscation` branch; Loom generates its remapped sources jar under
+`.gradle/loom-cache/remapped_mods`, read that one (not `create-fly-rc2-src`). The rest of this
+file describes the 26.2 port; where 1.21.11 differs, it is listed here.
+
+- **Build**: 1.21.11 is still obfuscated: Loom's `net.fabricmc.fabric-loom-remap` plugin with
+  `loom.officialMojangMappings()`, `mod*` configurations, Java 21 (also for the Gradle daemon).
+  The classtweaker became `createcasing.accesswidener` (`accessWidener v2 named`; the jar carries
+  it remapped to intermediary) and also opens `BlockEntityType`'s constructor and supplier, as on
+  26.1.2. Fabric API's creative tab module is `fabric-item-group-api-v1`. JEI is pinned to
+  27.7.0.30: later 1.21.11 builds were made with Loom 1.17, which Loom 1.16 cannot read.
+- **API names**: `FabricBlockEntityType.addSupportedBlock` (26.2: `addValidBlock`),
+  `PayloadTypeRegistry.playC2S()`, `GuiGraphics.drawString`, `Models.partial` (26.2:
+  `chunkPartial`), `EncasedCogRenderer::small/large`, client gametests' `getClientWorld()`, and the
+  26.1.2 `CogwheelBlockItem` cast. Create Fly calls `BlockState.is(Block)` and `ItemStack.is(Item)`
+  (26.2: `is(Object)`), so the block-check mixins target those.
+- **Rendering**: Create Fly 1.21.11 has no `SuperByteBufferRenderState`, `extractBase` or
+  `cardinalLighting`. `TransmissionRenderer` and `EncasedCustomRenderers.Shaft` extend
+  `KineticBlockEntityRenderer` and only swap the model; `ConfigurableGearboxRenderer` follows
+  Create Fly's `GearboxRenderer`. Drills, rollers and spouts have no block visual on 1.21.11 (their
+  renderers always run, covered by `RendererPartialsMixin`), so their visual mixins are gone.
+- **Chunk layers**: 1.21.11 does not derive them from the textures. `EncasedBlockLayers` gives
+  every block its Create counterpart's layer from Create Fly's `AllBlockLayers`, and the glass
+  shaft `CUTOUT` (1.21.11 has no `cutout_mipped`).
+- **Models**: `BlockModelPart` (26.2: `BlockStateModelPart`), particle sprites instead of
+  `Material.Baked`, `BakedQuad` built field by field (`BeltModelMixin`). Create Fly's
+  `PipeAttachmentModel` unwraps a wrapped model itself, so encased pipes use it directly.
+- **Assets** (back to upstream where Create Fly 1.21.11 is): connected textures are read from the
+  `*_connected.png` sheets again (restored; the per-tile folders stay for `master`), large encased
+  cogwheels use the whole side sheet, the chain conveyor model's texture key is `0` and its bull
+  wheel is its own partial again (`wheel.json` per set, swapped through `CasingSetVisuals`). Item
+  definitions use `minecraft:model`: there is no `create:model/normal` on 1.21.11.
+- **Ponder schematics**: the mod's own `.nbt` files (from upstream) stored block positions as
+  `{X,Y,Z}` compounds and belt casings as `"NONE"`, which Create Fly 1.21.11 cannot decode
+  (`Serialization errors` in the log while a scene is open). They now use int lists and lower case,
+  like Create Fly's own schematics.
+- `fabric.mod.json` requires Minecraft `>=1.21.11 <1.21.12-`, Java 21, Fabric API `>=0.141.6`,
+  Create `>=6.0.9-5`.
+
+Checked on 2026-10-20: `runServer` reaches `Done` with no errors; `runClientGameTest` passes all 25
+gameplay checks, the ponder scenes open, JEI lists the mixers as mixing catalysts. Some
+`RenderCheck` shots (`grid_rows_*_1`, `driven_*`) point at the sky on 1.21.11; the others show
+the blocks with their casings and connected textures. Not looked at yet: the per-set chain
+conveyor wheels in motion.
 
 **Read `../create-fly-rc2-src/` for Create Fly code, not `../create-fly/`.** The latter is Create
 Fly's master branch and differs a lot from the rc-2 jar this compiles against (encased cogwheel

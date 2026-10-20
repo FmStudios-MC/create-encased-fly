@@ -1,6 +1,6 @@
 {
   "model": {
-    "type": "create:model/normal",
+    "type": "minecraft:model",
     "model": "createcasing:item/acacia_large_cogwheel"
   }
 }

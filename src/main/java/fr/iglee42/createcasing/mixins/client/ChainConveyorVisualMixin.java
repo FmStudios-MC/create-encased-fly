@@ -14,12 +14,12 @@ import org.spongepowered.asm.mixin.injection.At;
 /** Chain conveyors of every casing draw their own shaft and guards. See {@code RendererPartialsMixin}. */
 @Mixin(ChainConveyorVisual.class)
 public class ChainConveyorVisualMixin {
-    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/zurrtum/create/client/flywheel/lib/model/Models;chunkPartial(Lcom/zurrtum/create/client/flywheel/lib/model/baked/PartialModel;)Lcom/zurrtum/create/client/flywheel/api/model/Model;"))
+    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/zurrtum/create/client/flywheel/lib/model/Models;partial(Lcom/zurrtum/create/client/flywheel/lib/model/baked/PartialModel;)Lcom/zurrtum/create/client/flywheel/api/model/Model;"))
     private static Model createcasing$shaft(PartialModel partial, Operation<Model> original, @Local(argsOnly = true) ChainConveyorBlockEntity be) {
         return original.call(EncasedPartialSwaps.swap(partial, be.getBlockState()));
     }
 
-    @WrapOperation(method = "setupGuards", at = @At(value = "INVOKE", target = "Lcom/zurrtum/create/client/flywheel/lib/model/Models;chunkPartial(Lcom/zurrtum/create/client/flywheel/lib/model/baked/PartialModel;)Lcom/zurrtum/create/client/flywheel/api/model/Model;"))
+    @WrapOperation(method = "setupGuards", at = @At(value = "INVOKE", target = "Lcom/zurrtum/create/client/foundation/render/SpecialModels;chunkDiffuse(Lcom/zurrtum/create/client/flywheel/lib/model/baked/PartialModel;)Lcom/zurrtum/create/client/flywheel/api/model/Model;"))
     private Model createcasing$guard(PartialModel partial, Operation<Model> original) {
         return original.call(EncasedPartialSwaps.swap(partial, ((BlockEntityVisualAccessor) this).createcasing$blockState()));
     }

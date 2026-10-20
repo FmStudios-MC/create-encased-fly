@@ -1,12 +1,14 @@
 package fr.iglee42.createcasing.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.zurrtum.create.catnip.data.Iterate;
+import com.zurrtum.create.catnip.theme.Color;
 import com.zurrtum.create.client.AllPartialModels;
+import com.zurrtum.create.client.catnip.animation.AnimationTickHolder;
 import com.zurrtum.create.client.catnip.render.CachedBuffers;
-import com.zurrtum.create.client.catnip.render.SuperByteBufferRenderState;
+import com.zurrtum.create.client.catnip.render.SuperByteBuffer;
 import com.zurrtum.create.client.flywheel.api.visualization.VisualizationManager;
-import com.zurrtum.create.client.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 import fr.iglee42.createcasing.blockEntities.ConfigurableGearboxBlockEntity;
 import fr.iglee42.createcasing.blocks.ConfigurableGearboxBlock;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -14,14 +16,12 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay;
-import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.world.level.CardinalLighting;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Quaternionf;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -43,14 +43,13 @@ public class ConfigurableGearboxRenderer implements BlockEntityRenderer<Configur
     public void extractRenderState(ConfigurableGearboxBlockEntity be, State state, float tickProgress, Vec3 cameraPos, @Nullable CrumblingOverlay crumblingOverlay) {
         state.shafts.clear();
         state.angles.clear();
-        Level level = be.getLevel();
-        if (VisualizationManager.supportsVisualization(level))
+        state.axes.clear();
+        if (VisualizationManager.supportsVisualization(be.getLevel()))
             return;
-        level = SmartBlockEntityRenderer.extractBase(be, state, crumblingOverlay);
-        CardinalLighting cardinalLighting = SmartBlockEntityRenderer.getCardinalLighting(level);
+        BlockEntityRenderState.extractBase(be, state, crumblingOverlay);
         BlockPos pos = state.blockPos;
-        int color = getTintColor(be);
-        float time = getProgress(be.getSpeed(), level);
+        state.color = getColor(be);
+        float time = AnimationTickHolder.getRenderTime(be.getLevel()) * be.getSpeed() * 3f / 10;
         for (Direction direction : Iterate.directions) {
             if (!state.blockState.getValue(ConfigurableGearboxBlock.getPropertyByDirection(direction)))
                 continue;
@@ -64,26 +63,33 @@ public class ConfigurableGearboxRenderer implements BlockEntityRenderer<Configur
                 else if (sourceFacing.getAxisDirection() == direction.getAxisDirection())
                     angle *= -1;
             }
-            state.angles.add(getRotateAngle(angle + getRotationOffsetForPosition(be, pos, axis), axis.getPositive()));
-            state.shafts.add(CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF, state.blockState, direction)
-                .cardinalLighting(cardinalLighting).light(state.lightCoords).color(color).extractRenderState());
+            state.angles.add((angle + getRotationOffsetForPosition(be, pos, axis)) / 180f * (float) Math.PI);
+            state.axes.add(axis.getPositive());
+            state.shafts.add(CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF, state.blockState, direction));
         }
     }
 
     @Override
     public void submit(State state, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraState) {
-        for (int i = 0; i < state.shafts.size(); i++) {
-            Quaternionf angle = state.angles.get(i);
-            matrices.pushPose();
-            if (angle != null)
-                matrices.rotateAround(angle, 0.5f, 0.5f, 0.5f);
-            state.shafts.get(i).submit(matrices, queue);
-            matrices.popPose();
-        }
+        if (!state.shafts.isEmpty())
+            queue.submitCustomGeometry(matrices, RenderTypes.solidMovingBlock(), state);
     }
 
-    public static class State extends BlockEntityRenderState {
-        final List<SuperByteBufferRenderState> shafts = new ArrayList<>();
-        final List<@Nullable Quaternionf> angles = new ArrayList<>();
+    public static class State extends BlockEntityRenderState implements SubmitNodeCollector.CustomGeometryRenderer {
+        final List<SuperByteBuffer> shafts = new ArrayList<>();
+        final List<Float> angles = new ArrayList<>();
+        final List<Direction> axes = new ArrayList<>();
+        Color color;
+
+        @Override
+        public void render(PoseStack.Pose matricesEntry, VertexConsumer vertexConsumer) {
+            for (int i = 0; i < shafts.size(); i++) {
+                SuperByteBuffer shaft = shafts.get(i);
+                shaft.light(lightCoords);
+                shaft.rotateCentered(angles.get(i), axes.get(i));
+                shaft.color(color);
+                shaft.renderInto(matricesEntry, vertexConsumer);
+            }
+        }
     }
 }

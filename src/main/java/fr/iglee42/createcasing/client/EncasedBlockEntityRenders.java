@@ -7,8 +7,7 @@ import com.zurrtum.create.client.AllPartialModels;
 import com.zurrtum.create.client.content.fluids.tank.FluidTankRenderer;
 import com.zurrtum.create.client.content.kinetics.base.SingleAxisRotatingVisual;
 import com.zurrtum.create.client.content.kinetics.simpleRelays.encased.EncasedCogVisual;
-import com.zurrtum.create.client.content.kinetics.simpleRelays.encased.EncasedLargeCogRenderer;
-import com.zurrtum.create.client.content.kinetics.simpleRelays.encased.EncasedSmallCogRenderer;
+import com.zurrtum.create.client.content.kinetics.simpleRelays.encased.EncasedCogRenderer;
 import com.zurrtum.create.client.content.kinetics.transmission.SplitShaftRenderer;
 import com.zurrtum.create.client.content.kinetics.transmission.SplitShaftVisual;
 import com.zurrtum.create.client.flywheel.lib.model.Models;
@@ -49,14 +48,14 @@ public class EncasedBlockEntityRenders {
 
         AllBlockEntityRenders.visual(EncasedBlockEntities.ENCASED_CUSTOM_SHAFT, EncasedCustomRenderers.Shaft::new,
             (context, be, partialTick) -> new SingleAxisRotatingVisual<>(context, be, partialTick,
-                Models.chunkPartial(TransmissionModels.shaft(be.getBlockState().getBlock()))));
+                Models.partial(TransmissionModels.shaft(be.getBlockState().getBlock()))));
         // Create Fly's encased cogwheel renderers; EncasedCogRendererMixin swaps in the inner cogwheel's material.
-        AllBlockEntityRenders.visual(EncasedBlockEntities.ENCASED_CUSTOM_COGWHEEL, EncasedSmallCogRenderer::new,
+        AllBlockEntityRenders.visual(EncasedBlockEntities.ENCASED_CUSTOM_COGWHEEL, EncasedCogRenderer::small,
             (context, be, partialTick) -> new EncasedCogVisual(context, be, false, partialTick,
-                Models.chunkPartial(TransmissionModels.shaftlessCog(be.getBlockState().getBlock()))));
-        AllBlockEntityRenders.visual(EncasedBlockEntities.ENCASED_CUSTOM_LARGE_COGWHEEL, EncasedLargeCogRenderer::new,
+                Models.partial(TransmissionModels.shaftlessCog(be.getBlockState().getBlock()))));
+        AllBlockEntityRenders.visual(EncasedBlockEntities.ENCASED_CUSTOM_LARGE_COGWHEEL, EncasedCogRenderer::large,
             (context, be, partialTick) -> new EncasedCogVisual(context, be, true, partialTick,
-                Models.chunkPartial(TransmissionModels.shaftlessLargeCog(be.getBlockState().getBlock()))));
+                Models.partial(TransmissionModels.shaftlessLargeCog(be.getBlockState().getBlock()))));
 
         AllBlockEntityRenders.render(EncasedBlockEntities.FLUID_TANK, FluidTankRenderer::new);
     }

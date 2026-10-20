@@ -1,6 +1,6 @@
-classTweaker v1 official
+accessWidener v2 named
 
-# Create Fly opens this in its own classtweaker, but access wideners are not transitive: the
+# Create Fly opens this in its own access widener, but access wideners are not transitive: the
 # mod's renderers read it like Create Fly's do.
 accessible field net/minecraft/client/renderer/blockentity/state/BlockEntityRenderState blockState Lnet/minecraft/world/level/block/state/BlockState;
 
@@ -8,3 +8,8 @@ accessible field net/minecraft/client/renderer/blockentity/state/BlockEntityRend
 # Fabric's addValidBlock; EncasedBlockEntities swaps such sets back to mutable ones.
 accessible field net/minecraft/world/level/block/entity/BlockEntityType validBlocks Ljava/util/Set;
 mutable field net/minecraft/world/level/block/entity/BlockEntityType validBlocks Ljava/util/Set;
+
+# BlockEntityType's constructor and supplier are private on 1.21.11 (26.2 opened them); Create Fly
+# widens them the same way.
+accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
+accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;Ljava/util/Set;)V

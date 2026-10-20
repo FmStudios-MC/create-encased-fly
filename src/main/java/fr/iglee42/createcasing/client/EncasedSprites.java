@@ -10,8 +10,8 @@ import fr.iglee42.createcasing.CreateCasing;
 import net.minecraft.resources.Identifier;
 
 /**
- * Connected-texture and sprite shifts. Create Fly reads connected textures as one sprite per tile
- * ({@code <name>_connected/<i>.png}), cut from upstream's sheets by {@code tools/split_ct_sheets.py}.
+ * Connected-texture and sprite shifts. Create Fly 1.21.11 reads connected textures as upstream's
+ * sheets ({@code <name>_connected.png}), not the per-tile sprites the 26.2 port cuts from them.
  * <p>
  * Upstream turned Create's creative casing into an omnidirectional connected texture with its own
  * sheet by patching Create's {@code AllSpriteShifts}; here the mod's creative casing blocks simply

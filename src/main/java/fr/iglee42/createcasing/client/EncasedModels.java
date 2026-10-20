@@ -60,7 +60,7 @@ public class EncasedModels {
                 encasedLargeCogwheel(set.get(Part.LARGE_COGWHEEL), ct);
             if (set.generates(Part.FLUID_PIPE)) {
                 Block pipe = set.get(Part.FLUID_PIPE);
-                AllModels.register(pipe, (state, unbaked) -> new PipeAttachmentModel.Encased(state, new CTModel(state, unbaked, new EncasedCTBehaviour(ct))));
+                AllModels.register(pipe, (state, unbaked) -> new PipeAttachmentModel(state, new CTModel(state, unbaked, new EncasedCTBehaviour(ct))));
                 AllCasings.make(pipe, ct, (s, f) -> !s.getValue(EncasedPipeBlock.FACING_TO_PROPERTY_MAP.get(f)));
             }
             if (set.generates(Part.GEARBOX)) {

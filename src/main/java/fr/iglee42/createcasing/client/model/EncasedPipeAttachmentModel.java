@@ -13,8 +13,8 @@ import com.zurrtum.create.content.fluids.FluidTransportBehaviour.AttachmentTypes
 import com.zurrtum.create.content.fluids.pipes.FluidPipeBlock;
 import fr.iglee42.createcasing.client.EncasedPartialModels;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.BlockAndTintGetter;
-import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.model.BlockModelPart;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -47,11 +47,11 @@ public class EncasedPipeAttachmentModel extends WrapperBlockStateModel {
     }
 
     @Override
-    public void addPartsWithInfo(BlockAndTintGetter world, BlockPos pos, BlockState state, RandomSource random, List<BlockStateModelPart> parts) {
+    public void addPartsWithInfo(BlockAndTintGetter world, BlockPos pos, BlockState state, RandomSource random, List<BlockModelPart> parts) {
         collectModelParts(world, pos, state, random, parts);
         Optional.ofNullable(BlockEntityBehaviour.get(world, pos, BracketedBlockEntityBehaviour.TYPE))
             .map(BracketedBlockEntityBehaviour::getBracket)
-            .map(bracket -> Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(bracket))
+            .map(bracket -> Minecraft.getInstance().getBlockRenderer().getBlockModel(bracket))
             .ifPresent(model -> model.collectParts(random, parts));
         Map<ComponentPartials, Map<Direction, PartialModel>> attachments = EncasedPartialModels.PIPE_ATTACHMENTS.get(setName);
         FluidTransportBehaviour transport = BlockEntityBehaviour.get(world, pos, FluidTransportBehaviour.TYPE);
@@ -59,15 +59,15 @@ public class EncasedPipeAttachmentModel extends WrapperBlockStateModel {
             for (Direction direction : Iterate.directions) {
                 AttachmentTypes type = transport.getRenderedRimAttachment(world, pos, state, direction);
                 for (ComponentPartials partial : type.partials)
-                    attachments.get(partial).get(direction).get().collectParts(random, parts);
+                    parts.add(attachments.get(partial).get(direction).get());
             }
         }
         PartialModel casing = EncasedPartialModels.PIPE_CASINGS.get(setName);
         if (casing != null && FluidPipeBlock.shouldDrawCasing(world, pos, state))
-            casing.get().collectParts(random, parts);
+            parts.add(casing.get());
     }
 
-    protected void collectModelParts(BlockAndTintGetter world, BlockPos pos, BlockState state, RandomSource random, List<BlockStateModelPart> parts) {
+    protected void collectModelParts(BlockAndTintGetter world, BlockPos pos, BlockState state, RandomSource random, List<BlockModelPart> parts) {
         model.collectParts(random, parts);
     }
 
@@ -77,7 +77,7 @@ public class EncasedPipeAttachmentModel extends WrapperBlockStateModel {
         }
 
         @Override
-        protected void collectModelParts(BlockAndTintGetter world, BlockPos pos, BlockState state, RandomSource random, List<BlockStateModelPart> parts) {
+        protected void collectModelParts(BlockAndTintGetter world, BlockPos pos, BlockState state, RandomSource random, List<BlockModelPart> parts) {
             ((WrapperBlockStateModel) model).addPartsWithInfo(world, pos, state, random, parts);
         }
     }

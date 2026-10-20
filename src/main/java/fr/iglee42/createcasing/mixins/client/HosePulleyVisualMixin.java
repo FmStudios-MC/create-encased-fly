@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 /** Hose pulleys of every material lower their own magnet. See {@code RendererPartialsMixin}. */
 @Mixin(HosePulleyVisual.class)
 public class HosePulleyVisualMixin {
-    @WrapOperation(method = {"getMagnetModel", "getHalfMagnetModel"}, at = @At(value = "INVOKE", target = "Lcom/zurrtum/create/client/flywheel/lib/model/Models;chunkPartial(Lcom/zurrtum/create/client/flywheel/lib/model/baked/PartialModel;)Lcom/zurrtum/create/client/flywheel/api/model/Model;"))
+    @WrapOperation(method = {"getMagnetModel", "getHalfMagnetModel"}, at = @At(value = "INVOKE", target = "Lcom/zurrtum/create/client/flywheel/lib/model/Models;partial(Lcom/zurrtum/create/client/flywheel/lib/model/baked/PartialModel;)Lcom/zurrtum/create/client/flywheel/api/model/Model;"))
     private Model createcasing$magnet(PartialModel partial, Operation<Model> original) {
         return original.call(EncasedPartialSwaps.swap(partial, ((BlockEntityVisualAccessor) this).createcasing$blockState()));
     }

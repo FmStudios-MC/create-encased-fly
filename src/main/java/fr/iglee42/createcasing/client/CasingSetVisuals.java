@@ -27,6 +27,7 @@ public record CasingSetVisuals(
     @Nullable PartialModel beltCoverZ,
     @Nullable PartialModel conveyorGuard,
     @Nullable PartialModel conveyorShaft,
+    @Nullable PartialModel conveyorWheel,
     @Nullable PartialModel mixerHead,
     @Nullable PartialModel drillHead,
     @Nullable PartialModel rollerFrame
@@ -63,6 +64,7 @@ public record CasingSetVisuals(
             hasBelt ? EncasedPartialModels.block("belt_cover/" + name + "_belt_cover_z") : null,
             complexTransmissions ? EncasedPartialModels.block("chain_conveyor/" + name + "/guard") : null,
             complexTransmissions ? EncasedPartialModels.block("chain_conveyor/" + name + "/shaft") : null,
+            complexTransmissions ? EncasedPartialModels.block("chain_conveyor/" + name + "/wheel") : null,
             processingAndContraptions ? EncasedPartialModels.block("mixer/" + name + "/head") : null,
             processingAndContraptions ? EncasedPartialModels.block("mechanical_drill/" + name + "/head") : null,
             processingAndContraptions ? EncasedPartialModels.block("mechanical_roller/" + name + "/frame") : null);

@@ -34,7 +34,7 @@ public record ConfigureAutoClutchPacket(BlockPos pos, int stress, int mode, int 
     }
 
     public static void register() {
-        PayloadTypeRegistry.serverboundPlay().register(TYPE, STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(TYPE, STREAM_CODEC);
         ServerPlayNetworking.registerGlobalReceiver(TYPE, (packet, context) -> packet.handle(context.player()));
     }
 

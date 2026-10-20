@@ -157,9 +157,9 @@ public class EncasedBlocks {
             BiFunction<Properties, Boolean, ? extends CogWheelBlock> cogFactory = set.getCogwheelConstructor() != null
                 ? set.getCogwheelConstructor() : (p, large) -> large ? CustomCogwheelBlock.large(p) : CustomCogwheelBlock.small(p);
             if (set.doesGenerateCogwheel())
-                set.setCogwheel(register(name + "_cogwheel", p -> cogFactory.apply(p, false), Properties.ofFullCopy(AllBlocks.COGWHEEL), CogwheelBlockItem::new, AllBlocks.COGWHEEL));
+                set.setCogwheel(register(name + "_cogwheel", p -> cogFactory.apply(p, false), Properties.ofFullCopy(AllBlocks.COGWHEEL), (b, p) -> new CogwheelBlockItem((CogWheelBlock) b, p), AllBlocks.COGWHEEL));
             if (set.doesGenerateLargeCogwheel())
-                set.setLargeCogwheel(register(name + "_large_cogwheel", p -> cogFactory.apply(p, true), Properties.ofFullCopy(AllBlocks.LARGE_COGWHEEL), CogwheelBlockItem::new, AllBlocks.LARGE_COGWHEEL));
+                set.setLargeCogwheel(register(name + "_large_cogwheel", p -> cogFactory.apply(p, true), Properties.ofFullCopy(AllBlocks.LARGE_COGWHEEL), (b, p) -> new CogwheelBlockItem((CogWheelBlock) b, p), AllBlocks.LARGE_COGWHEEL));
         }
 
         registerFluidSets();

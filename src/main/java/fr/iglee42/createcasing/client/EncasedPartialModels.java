@@ -17,9 +17,6 @@ import java.util.Map;
  * Partial models. The per-set ones (mixer heads, drill heads, belt covers, ...) are handed to
  * {@link CasingSetVisuals} and {@link FluidSetVisuals}; the shaft and cogwheel maps are keyed by
  * transmission set name, as upstream.
- * <p>
- * Upstream's chain conveyor "wheel" partial is gone: Create Fly draws the bull wheel as part of
- * the conveyor's shaft model.
  */
 public class EncasedPartialModels {
     public static final PartialModel GLASS_SHAFT = block("shaft/glass");

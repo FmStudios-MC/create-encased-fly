@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Swaps Create's partial models for a block's own set: mixer heads, drill heads, roller frames,
- * chain conveyor guards and shafts, boiler gauges, valve handles, hose pulley magnets, fluid
+ * chain conveyor guards, shafts and wheels, boiler gauges, valve handles, hose pulley magnets, fluid
  * interface tops, spout bottoms and the cogwheel inside a custom encased cogwheel.
  * <p>
  * Upstream patched each renderer and visual with its own redirect; the client mixins here all
@@ -42,6 +42,8 @@ public final class EncasedPartialSwaps {
                 swapped = casing.rollerFrame();
             else if (partial == AllPartialModels.CHAIN_CONVEYOR_GUARD)
                 swapped = casing.conveyorGuard();
+            else if (partial == AllPartialModels.CHAIN_CONVEYOR_WHEEL)
+                swapped = casing.conveyorWheel();
             else if (partial == AllPartialModels.CHAIN_CONVEYOR_SHAFT)
                 swapped = casing.conveyorShaft();
             if (swapped != null)

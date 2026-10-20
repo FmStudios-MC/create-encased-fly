@@ -2,6 +2,7 @@ package fr.iglee42.createcasing.utils;
 
 import fr.iglee42.createcasing.registries.EncasedBlocks;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,12 +18,12 @@ public final class BaseBlockChecks {
     }
 
     /** {@code state.is(target)} as Create wrote it, or the state's block is a variant of {@code target}. */
-    public static boolean is(BlockState state, Object target, boolean original) {
-        return original || target instanceof Block block && EncasedBlocks.getBase(state.getBlock()) == block;
+    public static boolean is(BlockState state, Block target, boolean original) {
+        return original || EncasedBlocks.getBase(state.getBlock()) == target;
     }
 
     /** {@code stack.is(target)} for a block item, or the stack holds a variant of that block. */
-    public static boolean is(ItemStack stack, Object target, boolean original) {
+    public static boolean is(ItemStack stack, Item target, boolean original) {
         if (original)
             return true;
         if (!(target instanceof BlockItem targetItem) || !(stack.getItem() instanceof BlockItem item))

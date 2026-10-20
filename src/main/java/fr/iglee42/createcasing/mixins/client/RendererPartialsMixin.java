@@ -28,8 +28,7 @@ import org.spongepowered.asm.mixin.injection.At;
     "com.zurrtum.create.client.content.fluids.hosePulley.HosePulleyRenderer",
     "com.zurrtum.create.client.content.contraptions.pulley.AbstractPulleyRenderer",
     "com.zurrtum.create.client.content.fluids.spout.SpoutRenderer",
-    "com.zurrtum.create.client.content.kinetics.simpleRelays.encased.EncasedSmallCogRenderer",
-    "com.zurrtum.create.client.content.kinetics.simpleRelays.encased.EncasedLargeCogRenderer"
+    "com.zurrtum.create.client.content.kinetics.simpleRelays.encased.EncasedCogRenderer"
 })
 public class RendererPartialsMixin {
     @WrapOperation(method = "*", require = 0, at = @At(value = "INVOKE", target = "Lcom/zurrtum/create/client/catnip/render/CachedBuffers;partial(Lcom/zurrtum/create/client/flywheel/lib/model/baked/PartialModel;Lnet/minecraft/world/level/block/state/BlockState;)Lcom/zurrtum/create/client/catnip/render/SuperByteBuffer;"))

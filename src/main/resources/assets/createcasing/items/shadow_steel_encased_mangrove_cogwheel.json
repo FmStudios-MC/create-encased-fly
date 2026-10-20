@@ -1,6 +1,6 @@
 {
   "model": {
-    "type": "create:model/normal",
+    "type": "minecraft:model",
     "model": "createcasing:item/shadow_steel_encased_mangrove_cogwheel"
   }
 }

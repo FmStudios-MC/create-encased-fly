@@ -12,7 +12,7 @@ import fr.iglee42.createcasing.CreateCasing;
 import fr.iglee42.createcasing.blockEntities.AutoClutchBlockEntity;
 import fr.iglee42.createcasing.packets.ConfigureAutoClutchPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -100,11 +100,11 @@ public class AutoClutchScreen extends AbstractSimiScreen {
     }
 
     @Override
-    protected void renderWindow(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
+    protected void renderWindow(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         int x = guiLeft;
         int y = guiTop;
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, x, y, 0, 0, WIDTH, HEIGHT, 256, 256);
-        graphics.text(font, title, x + (WIDTH - 8) / 2 - font.width(title) / 2, y + 4, 0xFF592424, false);
+        graphics.drawString(font, title, x + (WIDTH - 8) / 2 - font.width(title) / 2, y + 4, 0xFF592424, false);
     }
 
     private void send(int operation) {

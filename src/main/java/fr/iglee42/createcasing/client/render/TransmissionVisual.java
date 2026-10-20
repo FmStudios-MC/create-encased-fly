@@ -31,8 +31,8 @@ public final class TransmissionVisual {
         if (ICogWheel.isLargeCog(state))
             return new LargeCogVisual<>(context, blockEntity, partialTick);
         if (ICogWheel.isSmallCog(state))
-            return new SingleAxisRotatingVisual<>(context, blockEntity, partialTick, Models.chunkPartial(TransmissionModels.cog(state.getBlock())));
-        return new SingleAxisRotatingVisual<>(context, blockEntity, partialTick, Models.chunkPartial(TransmissionModels.shaft(state.getBlock())));
+            return new SingleAxisRotatingVisual<>(context, blockEntity, partialTick, Models.partial(TransmissionModels.cog(state.getBlock())));
+        return new SingleAxisRotatingVisual<>(context, blockEntity, partialTick, Models.partial(TransmissionModels.shaft(state.getBlock())));
     }
 
     /** Large cogs sometimes have to offset their teeth by 11.25 degrees in order to mesh properly. */
@@ -40,9 +40,9 @@ public final class TransmissionVisual {
         protected final RotatingInstance additionalShaft;
 
         private LargeCogVisual(VisualizationContext context, T blockEntity, float partialTick) {
-            super(context, blockEntity, partialTick, Models.chunkPartial(TransmissionModels.shaftlessLargeCog(blockEntity.getBlockState().getBlock())));
+            super(context, blockEntity, partialTick, Models.partial(TransmissionModels.shaftlessLargeCog(blockEntity.getBlockState().getBlock())));
             Axis axis = KineticBlockEntityRenderer.getRotationAxisOf(blockEntity);
-            additionalShaft = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.chunkPartial(AllPartialModels.COGWHEEL_SHAFT)).createInstance();
+            additionalShaft = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(AllPartialModels.COGWHEEL_SHAFT)).createInstance();
             additionalShaft.rotateToFace(axis).setup(blockEntity)
                 .setRotationOffset(BracketedKineticBlockEntityRenderer.getShaftAngleOffset(axis, pos))
                 .setPosition(getVisualPosition()).setChanged();

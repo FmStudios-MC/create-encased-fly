@@ -2,7 +2,7 @@ package fr.iglee42.createcasing.mixins.client;
 
 import com.zurrtum.create.catnip.data.Iterate;
 import com.zurrtum.create.client.catnip.render.SpriteShiftEntry;
-import com.zurrtum.create.client.foundation.model.BakedModelHelper;
+import com.zurrtum.create.client.model.NormalsBakedQuad;
 import com.zurrtum.create.client.infrastructure.model.BeltModel;
 import com.zurrtum.create.client.infrastructure.model.WrapperBlockStateModel;
 import com.zurrtum.create.content.kinetics.belt.BeltBlock;
@@ -10,18 +10,16 @@ import com.zurrtum.create.content.kinetics.belt.BeltBlockEntity;
 import fr.iglee42.createcasing.casings.CasingSet;
 import fr.iglee42.createcasing.casings.CasingSets;
 import fr.iglee42.createcasing.client.CasingSetVisuals;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.model.geom.builders.UVPair;
-import net.minecraft.client.renderer.block.BlockAndTintGetter;
-import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.BlockModelPart;
+import net.minecraft.client.renderer.block.model.SimpleModelWrapper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.SimpleModelWrapper;
-import net.minecraft.client.resources.model.geometry.BakedQuad;
-import net.minecraft.client.resources.model.geometry.QuadCollection;
-import net.minecraft.client.resources.model.sprite.Material;
+import net.minecraft.client.resources.model.QuadCollection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -50,50 +48,50 @@ public abstract class BeltModelMixin extends WrapperBlockStateModel {
         return null;
     }
 
-    @Inject(method = "particleMaterialWithInfo", at = @At("HEAD"), cancellable = true)
-    private void createcasing$particle(BlockAndTintGetter world, BlockPos pos, BlockState state, CallbackInfoReturnable<Material.Baked> cir) {
+    @Inject(method = "particleSpriteWithInfo", at = @At("HEAD"), cancellable = true)
+    private void createcasing$particle(BlockAndTintGetter world, BlockPos pos, BlockState state, CallbackInfoReturnable<TextureAtlasSprite> cir) {
         CasingSetVisuals visuals = createcasing$visuals(world, pos);
         if (visuals == null || visuals.belt() == null)
             return;
-        TextureAtlasSprite sprite = visuals.casing() != null ? visuals.casing().getOriginal() : visuals.belt().getTarget();
-        cir.setReturnValue(new Material.Baked(sprite, false));
+        cir.setReturnValue(visuals.casing() != null ? visuals.casing().getOriginal() : visuals.belt().getTarget());
     }
 
     @Inject(method = "addPartsWithInfo", at = @At("HEAD"), cancellable = true)
-    private void createcasing$parts(BlockAndTintGetter world, BlockPos pos, BlockState state, RandomSource random, List<BlockStateModelPart> parts, CallbackInfo ci) {
+    private void createcasing$parts(BlockAndTintGetter world, BlockPos pos, BlockState state, RandomSource random, List<BlockModelPart> parts, CallbackInfo ci) {
         CasingSetVisuals visuals = createcasing$visuals(world, pos);
         if (visuals == null || visuals.belt() == null)
             return;
         if (world.getBlockEntity(pos) instanceof BeltBlockEntity be && be.covered) {
             boolean alongX = state.getValue(BeltBlock.HORIZONTAL_FACING).getAxis() == Direction.Axis.X;
-            (alongX ? visuals.beltCoverX() : visuals.beltCoverZ()).get().collectParts(random, parts);
+            parts.add((alongX ? visuals.beltCoverX() : visuals.beltCoverZ()).get());
         }
         SpriteShiftEntry shift = visuals.belt();
-        List<BlockStateModelPart> modelParts = new ObjectArrayList<>();
-        model.collectParts(random, modelParts);
-        for (BlockStateModelPart part : modelParts)
+        for (BlockModelPart part : model.collectParts(random))
             parts.add(createcasing$shift(shift, part));
         ci.cancel();
     }
 
     @Unique
-    private static BlockStateModelPart createcasing$shift(SpriteShiftEntry shift, BlockStateModelPart part) {
+    private static BlockModelPart createcasing$shift(SpriteShiftEntry shift, BlockModelPart part) {
         QuadCollection.Builder builder = new QuadCollection.Builder();
         for (BakedQuad quad : part.getQuads(null))
             builder.addUnculledFace(createcasing$shift(shift, quad));
         for (Direction direction : Iterate.directions)
             for (BakedQuad quad : part.getQuads(direction))
                 builder.addCulledFace(direction, createcasing$shift(shift, quad));
-        return new SimpleModelWrapper(builder.build(), part.useAmbientOcclusion(), part.particleMaterial());
+        return new SimpleModelWrapper(builder.build(), part.useAmbientOcclusion(), part.particleIcon());
     }
 
     @Unique
     private static BakedQuad createcasing$shift(SpriteShiftEntry shift, BakedQuad quad) {
-        BakedQuad.MaterialInfo info = quad.materialInfo();
-        if (info.sprite() != shift.getOriginal())
+        if (quad.sprite() != shift.getOriginal())
             return quad;
-        return BakedModelHelper.replaceBakedQuadUV(quad, createcasing$uv(shift, quad.packedUV0()), createcasing$uv(shift, quad.packedUV1()),
-            createcasing$uv(shift, quad.packedUV2()), createcasing$uv(shift, quad.packedUV3()), info);
+        BakedQuad shifted = new BakedQuad(quad.position0(), quad.position1(), quad.position2(), quad.position3(),
+            createcasing$uv(shift, quad.packedUV0()), createcasing$uv(shift, quad.packedUV1()),
+            createcasing$uv(shift, quad.packedUV2()), createcasing$uv(shift, quad.packedUV3()),
+            quad.tintIndex(), quad.direction(), quad.sprite(), quad.shade(), quad.lightEmission());
+        NormalsBakedQuad.setNormals(shifted, NormalsBakedQuad.getNormals(quad));
+        return shifted;
     }
 
     @Unique

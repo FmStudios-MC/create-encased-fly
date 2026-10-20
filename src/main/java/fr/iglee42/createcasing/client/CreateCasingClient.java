@@ -14,7 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
 /**
- * Client entrypoint: partial models, sprite shifts, model wrappers and casing connectivity,
+ * Client entrypoint: partial models, sprite shifts, model wrappers and casing connectivity, chunk layers,
  * renderers and visuals, client behaviours, item tooltips and the automatic clutch screen.
  */
 public class CreateCasingClient implements ClientModInitializer {
@@ -28,6 +28,7 @@ public class CreateCasingClient implements ClientModInitializer {
         FluidSetVisuals.indexBlocks();
 
         EncasedModels.register();
+        EncasedBlockLayers.register();
         EncasedBlockEntityRenders.register();
         EncasedBlockEntityRenders.registerBehaviours();
 
