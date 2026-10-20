@@ -22,7 +22,7 @@ loom {
 }
 
 // JSONs that Registrate generated for 1.21.1. There is no Registrate on Create Fly, so they are kept
-// and migrated to the 1.21.10 formats instead of being regenerated.
+// and migrated to the 1.21.8 formats instead of being regenerated.
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 sourceSets.main.java {
@@ -31,7 +31,7 @@ sourceSets.main.java {
     exclude 'fr/iglee42/createcasing/registries/EncasedBlockStateGens.java'
     exclude 'fr/iglee42/createcasing/registries/EncasedRecipeGens.java'
     exclude 'fr/iglee42/createcasing/registries/generators/**'
-    // Compat with mods that have no Fabric 1.21.10 release (KubeJS, Slice and Dice, Farmer's Delight).
+    // Compat with mods that have no Fabric 1.21.8 release (KubeJS, Slice and Dice, Farmer's Delight).
     exclude 'fr/iglee42/createcasing/kubejs/**'
     exclude 'fr/iglee42/createcasing/compat/sliceanddice/**'
     exclude 'fr/iglee42/createcasing/mixins/sliceanddice/**'
@@ -42,6 +42,23 @@ repositories {
     maven {
         name = "Fabric"
         url = "https://maven.fabricmc.net/"
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Shedaniel"
+                url = "https://maven.shedaniel.me/"
+            }
+            maven {
+                name = "Architectury"
+                url = "https://maven.architectury.dev/"
+            }
+        }
+        filter {
+            includeGroup "me.shedaniel"
+            includeGroup "me.shedaniel.cloth"
+            includeGroup "dev.architectury"
+        }
     }
     exclusiveContent {
         forRepository {
@@ -58,7 +75,7 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    // 1.21.10 is still obfuscated: compiled against Mojang names, remapped to intermediary for the jar.
+    // 1.21.8 is still obfuscated: compiled against Mojang names, remapped to intermediary for the jar.
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
@@ -74,14 +91,18 @@ dependencies {
     modImplementation fabricApi.module("fabric-object-builder-api-v1", project.fabric_version)
     modImplementation fabricApi.module("fabric-rendering-v1", project.fabric_version)
     modImplementation fabricApi.module("fabric-resource-conditions-api-v1", project.fabric_version)
-    modImplementation fabricApi.module("fabric-resource-loader-v1", project.fabric_version)
+    modImplementation fabricApi.module("fabric-resource-loader-v0", project.fabric_version)
     modImplementation fabricApi.module("fabric-transfer-api-v1", project.fabric_version)
     modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation "maven.modrinth:create-fly:${project.create_fly_version}"
 
-    // JEI finds the plugin through the jei_mod_plugin entrypoint; optional at runtime.
-    modCompileOnly "maven.modrinth:jei:${project.jei_version}"
+    // REI finds the plugin through the rei_client entrypoint; optional at runtime. Create Fly 1.21.8
+    // has no JEI integration, so its categories exist in REI only.
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}") { transitive = false }
+    // Create Fly's category ids are typed with the default plugin's displays and Architectury's fluids
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}") { transitive = false }
+    modCompileOnly("dev.architectury:architectury-fabric:${project.architectury_version}") { transitive = false }
 }
 
 processResources {
@@ -133,6 +154,8 @@ fabricApi {
 
 dependencies {
     modGametestImplementation fabricApi.module("fabric-client-gametest-api-v1", project.fabric_version)
-    // JEI in the test run only, to check the catalysts
-    modGametestImplementation "maven.modrinth:jei:${project.jei_version}"
+    // REI in the test run only, to check the workstations; its POM asks for a 1.21.6 Fabric API
+    modGametestImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}") {
+        exclude group: "net.fabricmc.fabric-api"
+    }
 }

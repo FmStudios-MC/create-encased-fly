@@ -1,4 +1,4 @@
-# Porting notes: Create Encased → Create Fly (Fabric, MC 26.2, ported back to 1.21.11 and 1.21.10)
+# Porting notes: Create Encased → Create Fly (Fabric, MC 26.2, ported back to 1.21.11, 1.21.10 and 1.21.8)
 
 ## State
 
@@ -14,13 +14,46 @@ the mod's drills/saws/rollers, the automatic clutch screen, belts with every cas
 | | |
 |---|---|
 | Upstream | https://github.com/iglee42/CreateCasing, branch `1.21.1/main` (1.9.0-ht3, commit `f584aaab`) |
-| Target | Minecraft 1.21.10 (Mojang mappings, remapped to intermediary), Fabric Loader 0.18.4, Fabric API 0.138.4+1.21.10 |
-| Create Fly | `maven.modrinth:create-fly:1.21.10-6.0.9-2` |
-| Optional | JEI 26.2.0.30 (Modrinth id `Y0JKqg8L`) |
+| Target | Minecraft 1.21.8 (Mojang mappings, remapped to intermediary), Fabric Loader 0.18.4, Fabric API 0.136.1+1.21.8 |
+| Create Fly | `maven.modrinth:create-fly:1.21.8-6.0.9-2` |
+| Optional | REI 20.0.811 (`me.shedaniel:RoughlyEnoughItems-fabric`, maven.shedaniel.me) |
 | Licence | MIT: keep `LICENSE` with iglee42's copyright notice |
 
 Mod id (`createcasing`), package (`fr.iglee42.createcasing`) and all block and item ids are
 unchanged, so recipes and data packs written for upstream apply.
+
+### Branch `1.21.8`
+
+The `1.21.10` port taken one version further back, version `1.9.0-ht3-fly.1.21.8`, against
+Create Fly `1.21.8-6.0.9-2` (remapped sources jar under `.gradle/loom-cache/remapped_mods`).
+Assets, data, mixins and common code are as on `1.21.10`; every mixin target was checked against
+the 1.21.8 sources. What differs:
+
+- **Block entity rendering**: 1.21.8 has no render states (`BlockEntityRenderState`,
+  `SubmitNodeCollector`, `extractRenderState`/`submit`, all new in 1.21.9). Create Fly's
+  `KineticBlockEntityRenderer<T>` takes one type argument and draws in `renderSafe`;
+  `TransmissionRenderer`, `CreativeCogwheelRenderer`, `EncasedCustomRenderers.Shaft` and
+  `ConfigurableGearboxRenderer` (now like Create Fly's `GearboxRenderer`) follow that. The access
+  widener entry for `BlockEntityRenderState.blockState` is gone.
+- **Registration**: `AllBlockEntityRenders.visual/render` are private in Create Fly 1.21.8;
+  `EncasedBlockEntityRenders` has its own copies (`BlockEntityRenderers.register` plus
+  `SimpleBlockEntityVisualizer`).
+- **Recipe viewer**: Create Fly 1.21.8 integrates REI and EIV, not JEI. The JEI plugin became
+  `client/compat/rei/EncasedReiPlugin` (`rei_client` entrypoint): the same workstations on
+  Create's categories (`ReiCommonPlugin` ids), priority 100 so it runs after Create Fly's plugin,
+  and the hidden items removed from the entry list. It compiles against REI's API and default
+  plugin plus Architectury; the client test run has the full REI.
+- `RendererPartialsMixin` no longer lists the drill and roller movement behaviours: on 1.21.8
+  they call `DrillRenderer`/`RollerRenderer.renderInContraption`, which are covered.
+- Fabric API's resource loader module is `fabric-resource-loader-v0`.
+- `fabric.mod.json` requires Minecraft `>=1.21.8 <1.21.9-`, Fabric API `>=0.136.1`, Create
+  `>=6.0.9-2`.
+
+Checked on 2026-10-20: `runServer --args="--nogui --world world-1.21.8"` reaches `Done` with no
+errors; `runClientGameTest` passes all 25 gameplay checks, REI lists the mod's mixers as mixing
+workstations, the ponder scenes open, the grid and close-ups show the casings with their
+connected textures. The `driven_*` and `grid_rows_0_*` shots point at the sky (camera, as on
+1.21.11), so the renderers above were not looked at in motion, nor without Flywheel.
 
 ### Branch `1.21.10`
 
@@ -170,7 +203,7 @@ capabilities and block checks accept them. Here:
   configurable gearbox (upstream overrode NeoForge's `doesSneakBypassUse`).
 - Ponder (`client/ponder`): Create's scenes for the variants are registered under Create's plugin
   (so schematics resolve in Create's namespace), the mod's three scenes and its tag under its own.
-- JEI (`client/compat/jei`): catalysts added to Create Fly's categories; encased shaft/cogwheel
+- JEI (`client/compat/jei`; REI in `client/compat/rei` on 1.21.8): catalysts added to Create Fly's categories; encased shaft/cogwheel
   items hidden, as upstream.
 
 ## Behaviour changed on purpose
@@ -198,7 +231,7 @@ capabilities and block checks accept them. Here:
     Create's; contraption behaviours, display source, arm point; recipes; belt casing, clutch
     settings and rotation after save and reload.
   - `RenderCheck`: every block in a grid, a driven row, close-ups of one casing set and one fluid
-    set, five ponder scenes, and the JEI mixing catalysts. It asserts nothing; look at
+    set, five ponder scenes, and the JEI mixing catalysts (REI workstations on 1.21.8). It asserts nothing; look at
     `build/run/clientGameTest/screenshots`.
   - The run ends with a Flywheel client-shutdown watchdog crash report after the tests: Create
     Fly's worker threads, harmless.

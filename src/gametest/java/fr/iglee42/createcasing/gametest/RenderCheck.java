@@ -68,15 +68,12 @@ public class RenderCheck implements FabricClientGameTest {
                 context.waitTicks(2);
             }
 
-            // JEI: the mod's machines are catalysts of Create's categories
-            var runtime = JeiRuntimeGrabber.runtime;
-            if (runtime == null) {
-                System.out.println("ENCASED-CHECK jei runtime missing");
-            } else {
-                String catalysts = runtime.getRecipeManager().createRecipeCatalystLookup(com.zurrtum.create.client.compat.jei.JeiClientPlugin.MIXING)
-                    .getItemStack().map(stack -> BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath()).toList().toString();
-                System.out.println("ENCASED-CHECK jei mixing catalysts " + catalysts);
-            }
+            // REI: the mod's machines are workstations of Create's categories
+            String workstations = context.computeOnClient(mc -> me.shedaniel.rei.api.client.registry.category.CategoryRegistry.getInstance()
+                .get(com.zurrtum.create.compat.rei.ReiCommonPlugin.MIXING).getWorkstations().stream()
+                .flatMap(java.util.Collection::stream)
+                .map(stack -> stack.getIdentifier() == null ? "?" : stack.getIdentifier().getPath()).toList().toString());
+            System.out.println("ENCASED-CHECK rei mixing workstations " + workstations);
 
             server.runOnServer(minecraftServer -> {
                 for (Block block : blocks)

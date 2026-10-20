@@ -19,9 +19,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(targets = {
     "com.zurrtum.create.client.content.kinetics.mixer.MechanicalMixerRenderer",
     "com.zurrtum.create.client.content.kinetics.drill.DrillRenderer",
-    "com.zurrtum.create.client.content.kinetics.drill.DrillMovementRenderBehaviour",
     "com.zurrtum.create.client.content.contraptions.actors.roller.RollerRenderer",
-    "com.zurrtum.create.client.content.contraptions.actors.roller.RollerMovementRenderBehaviour",
     "com.zurrtum.create.client.content.kinetics.chainConveyor.ChainConveyorRenderer",
     "com.zurrtum.create.client.content.fluids.tank.FluidTankRenderer",
     "com.zurrtum.create.client.content.kinetics.crank.ValveHandleRenderer",

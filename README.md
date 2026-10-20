@@ -1,6 +1,6 @@
 # Create Encased (Fly Port)
 
-Unofficial Fabric / Minecraft 1.21.10 port of [Create Encased](https://github.com/iglee42/CreateCasing)
+Unofficial Fabric / Minecraft 1.21.8 port of [Create Encased](https://github.com/iglee42/CreateCasing)
 by iglee42, built on ZurrTum's [Create Fly](https://modrinth.com/mod/create-fly).
 Not made, maintained or supported by iglee42: report problems with this port here, not upstream.
 
@@ -21,14 +21,15 @@ Create's machines, shafts, cogwheels and fluid blocks in every casing:
   material to swap its material (both can be turned off in the config).
 
 743 blocks in all. Every variant works like the Create block it is made from: same stress,
-same contraption behaviour, same pipes and transfer, same JEI categories and ponder scenes.
+same contraption behaviour, same pipes and transfer, same REI categories and ponder scenes.
 
 ## Requirements
 
-Minecraft 1.21.10, Fabric Loader 0.18.4+, Fabric API 0.138.4+, Create Fly 1.21.10-6.0.9-2+. JEI is optional.
+Minecraft 1.21.8, Fabric Loader 0.18.4+, Fabric API 0.136.1+, Create Fly 1.21.8-6.0.9-2+. REI is optional
+(Create Fly 1.21.8 has no JEI integration, so neither does this port).
 
 Upstream's KubeJS and Slice and Dice / Farmer's Delight integrations are not included: those mods
-have no Fabric 1.21.10 release.
+have no Fabric 1.21.8 release.
 
 ## Config
 

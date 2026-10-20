@@ -2,7 +2,6 @@ package fr.iglee42.createcasing.client;
 
 import com.zurrtum.create.catnip.math.VecHelper;
 import com.zurrtum.create.client.AllBlockEntityBehaviours;
-import com.zurrtum.create.client.AllBlockEntityRenders;
 import com.zurrtum.create.client.AllPartialModels;
 import com.zurrtum.create.client.content.fluids.tank.FluidTankRenderer;
 import com.zurrtum.create.client.content.kinetics.base.SingleAxisRotatingVisual;
@@ -11,6 +10,7 @@ import com.zurrtum.create.client.content.kinetics.simpleRelays.encased.EncasedCo
 import com.zurrtum.create.client.content.kinetics.transmission.SplitShaftRenderer;
 import com.zurrtum.create.client.content.kinetics.transmission.SplitShaftVisual;
 import com.zurrtum.create.client.flywheel.lib.model.Models;
+import com.zurrtum.create.client.flywheel.lib.visualization.SimpleBlockEntityVisualizer;
 import com.zurrtum.create.client.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.zurrtum.create.client.foundation.blockEntity.behaviour.audio.KineticAudioBehaviour;
 import com.zurrtum.create.client.foundation.blockEntity.behaviour.scrollValue.KineticScrollValueBehaviour;
@@ -22,7 +22,11 @@ import fr.iglee42.createcasing.blockEntities.CreativeCogwheelBlockEntity;
 import fr.iglee42.createcasing.blocks.CreativeCogwheelBlock;
 import fr.iglee42.createcasing.client.render.*;
 import fr.iglee42.createcasing.registries.EncasedBlockEntities;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
@@ -35,29 +39,40 @@ import net.minecraft.world.phys.Vec3;
 public class EncasedBlockEntityRenders {
 
     public static void register() {
-        AllBlockEntityRenders.visual(EncasedBlockEntities.CREATIVE_COGWHEEL, CreativeCogwheelRenderer::new,
+        visual(EncasedBlockEntities.CREATIVE_COGWHEEL, CreativeCogwheelRenderer::new,
             SingleAxisRotatingVisual.of(AllPartialModels.SHAFTLESS_COGWHEEL));
-        AllBlockEntityRenders.visual(EncasedBlockEntities.AUTOMATIC_CLUTCH, SplitShaftRenderer::new, SplitShaftVisual::new);
-        AllBlockEntityRenders.visual(EncasedBlockEntities.CONFIGURABLE_GEARBOX, ConfigurableGearboxRenderer::new, ConfigurableGearboxVisual::new);
+        visual(EncasedBlockEntities.AUTOMATIC_CLUTCH, SplitShaftRenderer::new, SplitShaftVisual::new);
+        visual(EncasedBlockEntities.CONFIGURABLE_GEARBOX, ConfigurableGearboxRenderer::new, ConfigurableGearboxVisual::new);
 
-        AllBlockEntityRenders.visual(EncasedBlockEntities.WOODEN_SHAFT, TransmissionRenderer::new, TransmissionVisual::create);
-        AllBlockEntityRenders.visual(EncasedBlockEntities.GLASS_SHAFT, TransmissionRenderer::new, TransmissionVisual::create);
-        AllBlockEntityRenders.visual(EncasedBlockEntities.CUSTOM_SHAFT, TransmissionRenderer::new, TransmissionVisual::create);
-        AllBlockEntityRenders.visual(EncasedBlockEntities.WOODEN_COGWHEELS, TransmissionRenderer::new, TransmissionVisual::create);
-        AllBlockEntityRenders.visual(EncasedBlockEntities.CUSTOM_COGWHEELS, TransmissionRenderer::new, TransmissionVisual::create);
+        visual(EncasedBlockEntities.WOODEN_SHAFT, TransmissionRenderer::new, TransmissionVisual::create);
+        visual(EncasedBlockEntities.GLASS_SHAFT, TransmissionRenderer::new, TransmissionVisual::create);
+        visual(EncasedBlockEntities.CUSTOM_SHAFT, TransmissionRenderer::new, TransmissionVisual::create);
+        visual(EncasedBlockEntities.WOODEN_COGWHEELS, TransmissionRenderer::new, TransmissionVisual::create);
+        visual(EncasedBlockEntities.CUSTOM_COGWHEELS, TransmissionRenderer::new, TransmissionVisual::create);
 
-        AllBlockEntityRenders.visual(EncasedBlockEntities.ENCASED_CUSTOM_SHAFT, EncasedCustomRenderers.Shaft::new,
+        visual(EncasedBlockEntities.ENCASED_CUSTOM_SHAFT, EncasedCustomRenderers.Shaft::new,
             (context, be, partialTick) -> new SingleAxisRotatingVisual<>(context, be, partialTick,
                 Models.partial(TransmissionModels.shaft(be.getBlockState().getBlock()))));
         // Create Fly's encased cogwheel renderers; EncasedCogRendererMixin swaps in the inner cogwheel's material.
-        AllBlockEntityRenders.visual(EncasedBlockEntities.ENCASED_CUSTOM_COGWHEEL, EncasedCogRenderer::small,
+        visual(EncasedBlockEntities.ENCASED_CUSTOM_COGWHEEL, EncasedCogRenderer::small,
             (context, be, partialTick) -> new EncasedCogVisual(context, be, false, partialTick,
                 Models.partial(TransmissionModels.shaftlessCog(be.getBlockState().getBlock()))));
-        AllBlockEntityRenders.visual(EncasedBlockEntities.ENCASED_CUSTOM_LARGE_COGWHEEL, EncasedCogRenderer::large,
+        visual(EncasedBlockEntities.ENCASED_CUSTOM_LARGE_COGWHEEL, EncasedCogRenderer::large,
             (context, be, partialTick) -> new EncasedCogVisual(context, be, true, partialTick,
                 Models.partial(TransmissionModels.shaftlessLargeCog(be.getBlockState().getBlock()))));
 
-        AllBlockEntityRenders.render(EncasedBlockEntities.FLUID_TANK, FluidTankRenderer::new);
+        render(EncasedBlockEntities.FLUID_TANK, FluidTankRenderer::new);
+    }
+
+    // Create Fly 1.21.8 keeps its own helpers private; these do the same.
+    private static <T extends BlockEntity, P extends T> void visual(BlockEntityType<P> type, BlockEntityRendererProvider<T> rendererFactory,
+                                                                    SimpleBlockEntityVisualizer.Factory<P> visualizerFactory) {
+        BlockEntityRenderers.register(type, rendererFactory);
+        SimpleBlockEntityVisualizer.builder(type).factory(visualizerFactory).skipVanillaRender(be -> true).apply();
+    }
+
+    private static <T extends BlockEntity, P extends T> void render(BlockEntityType<P> type, BlockEntityRendererProvider<T> rendererFactory) {
+        BlockEntityRenderers.register(type, rendererFactory);
     }
 
     /** Client halves of block entity behaviours: goggle tooltips, kinetic sounds, the speed box. */

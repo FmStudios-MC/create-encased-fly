@@ -3,10 +3,11 @@ package fr.iglee42.createcasing.client.render;
 import com.zurrtum.create.client.catnip.render.CachedBuffers;
 import com.zurrtum.create.client.catnip.render.SuperByteBuffer;
 import com.zurrtum.create.client.content.kinetics.base.KineticBlockEntityRenderer;
-import com.zurrtum.create.client.content.kinetics.base.KineticBlockEntityRenderer.KineticRenderState;
 import com.zurrtum.create.content.kinetics.base.KineticBlockEntity;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -18,7 +19,7 @@ public final class EncasedCustomRenderers {
     private EncasedCustomRenderers() {
     }
 
-    public static class Shaft extends KineticBlockEntityRenderer<KineticBlockEntity, KineticRenderState> {
+    public static class Shaft extends KineticBlockEntityRenderer<KineticBlockEntity> {
         public Shaft(Context context) {
             super(context);
         }
@@ -30,8 +31,9 @@ public final class EncasedCustomRenderers {
         }
 
         @Override
-        protected SuperByteBuffer getRotatedModel(KineticBlockEntity be, KineticRenderState state) {
-            return CachedBuffers.partialFacingVertical(TransmissionModels.shaft(state.blockState.getBlock()), state.blockState, state.direction);
+        protected SuperByteBuffer getRotatedModel(KineticBlockEntity be, BlockState state) {
+            return CachedBuffers.partialFacingVertical(TransmissionModels.shaft(state.getBlock()), state,
+                Direction.fromAxisAndDirection(getRotationAxisOf(be), AxisDirection.POSITIVE));
         }
     }
 }
