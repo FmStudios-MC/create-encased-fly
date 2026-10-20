@@ -1,6 +1,6 @@
 # Create Encased (Fly Port)
 
-Unofficial Fabric / Minecraft 1.21.11 port of [Create Encased](https://github.com/iglee42/CreateCasing)
+Unofficial Fabric / Minecraft 1.21.10 port of [Create Encased](https://github.com/iglee42/CreateCasing)
 by iglee42, built on ZurrTum's [Create Fly](https://modrinth.com/mod/create-fly).
 Not made, maintained or supported by iglee42: report problems with this port here, not upstream.
 
@@ -25,10 +25,10 @@ same contraption behaviour, same pipes and transfer, same JEI categories and pon
 
 ## Requirements
 
-Minecraft 1.21.11, Fabric Loader 0.18.4+, Fabric API 0.141.6+, Create Fly 1.21.11-6.0.9-5+. JEI is optional.
+Minecraft 1.21.10, Fabric Loader 0.18.4+, Fabric API 0.138.4+, Create Fly 1.21.10-6.0.9-2+. JEI is optional.
 
 Upstream's KubeJS and Slice and Dice / Farmer's Delight integrations are not included: those mods
-have no Fabric 1.21.11 release.
+have no Fabric 1.21.10 release.
 
 ## Config
 

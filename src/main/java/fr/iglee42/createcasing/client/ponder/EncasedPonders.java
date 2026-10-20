@@ -15,7 +15,7 @@ import fr.iglee42.createcasing.fluids.FluidSet;
 import fr.iglee42.createcasing.fluids.FluidSets;
 import fr.iglee42.createcasing.registries.EncasedBlocks;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.ArrayList;
@@ -27,12 +27,12 @@ import java.util.List;
  * own.
  */
 public final class EncasedPonders {
-    public static final Identifier ENCASED_BLOCKS = CreateCasing.asResource("encased_blocks");
+    public static final ResourceLocation ENCASED_BLOCKS = CreateCasing.asResource("encased_blocks");
 
     private EncasedPonders() {
     }
 
-    private static PonderSceneRegistrationHelper<ItemLike> items(PonderSceneRegistrationHelper<Identifier> helper) {
+    private static PonderSceneRegistrationHelper<ItemLike> items(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         return helper.withKeyFunction(item -> BuiltInRegistries.ITEM.getKey(item.asItem()));
     }
 
@@ -68,7 +68,7 @@ public final class EncasedPonders {
         }
 
         @Override
-        public void registerScenes(PonderSceneRegistrationHelper<Identifier> helper) {
+        public void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
             PonderSceneRegistrationHelper<ItemLike> h = items(helper);
             h.forComponents(casing(Part.GEARBOX)).addStoryBoard("gearbox", KineticsScenes::gearbox, AllCreatePonderTags.KINETIC_RELAYS);
             h.forComponents(verticalGearboxes()).addStoryBoard("gearbox", KineticsScenes::gearbox, AllCreatePonderTags.KINETIC_RELAYS);
@@ -145,7 +145,7 @@ public final class EncasedPonders {
         }
 
         @Override
-        public void registerScenes(PonderSceneRegistrationHelper<Identifier> helper) {
+        public void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
             PonderSceneRegistrationHelper<ItemLike> h = items(helper);
             h.forComponents(EncasedBlocks.CREATIVE_COGWHEEL).addStoryBoard("creative_cogwheel", CustomPonderScenes::creativeCogwheel, AllCreatePonderTags.KINETIC_SOURCES);
             h.forComponents(casing(Part.CONFIGURABLE_GEARBOX)).addStoryBoard("configurable_gearbox", CustomPonderScenes::configurableGearbox);
@@ -153,7 +153,7 @@ public final class EncasedPonders {
         }
 
         @Override
-        public void registerTags(PonderTagRegistrationHelper<Identifier> helper) {
+        public void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
             PonderTagRegistrationHelper<ItemLike> h = helper.withKeyFunction(item -> BuiltInRegistries.ITEM.getKey(item.asItem()));
             helper.registerTag(ENCASED_BLOCKS).item(CasingSets.BRASS.get(Part.GEARBOX), true, false)
                 .title("Create Encased")

@@ -3,12 +3,12 @@
   "id": "createcasing",
   "version": "${version}",
   "name": "Create Encased (Fly Port)",
-  "description": "Unofficial Fabric / Minecraft 1.21.11 port of Create Encased by iglee42: Create's machines, shafts, cogwheels and fluid blocks in every casing. Built on ZurrTum's Create Fly. Not made, maintained or supported by iglee42.",
+  "description": "Unofficial Fabric / Minecraft 1.21.10 port of Create Encased by iglee42: Create's machines, shafts, cogwheels and fluid blocks in every casing. Built on ZurrTum's Create Fly. Not made, maintained or supported by iglee42.",
   "authors": [
     "iglee42"
   ],
   "contributors": [
-    "FabiMvurice Interactive (Fabric / 1.21.11 port)",
+    "FabiMvurice Interactive (Fabric / 1.21.10 port)",
     "ZurrTum (Create Fly)"
   ],
   "contact": {
@@ -36,9 +36,9 @@
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "minecraft": ">=1.21.11 <1.21.12-",
+    "minecraft": ">=1.21.10 <1.21.11-",
     "java": ">=21",
-    "fabric-api": ">=0.141.6",
+    "fabric-api": ">=0.138.4",
     "create": "${create_fly_version_range}"
   }
 }

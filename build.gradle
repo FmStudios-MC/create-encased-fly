@@ -22,7 +22,7 @@ loom {
 }
 
 // JSONs that Registrate generated for 1.21.1. There is no Registrate on Create Fly, so they are kept
-// and migrated to the 1.21.11 formats instead of being regenerated.
+// and migrated to the 1.21.10 formats instead of being regenerated.
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 sourceSets.main.java {
@@ -31,7 +31,7 @@ sourceSets.main.java {
     exclude 'fr/iglee42/createcasing/registries/EncasedBlockStateGens.java'
     exclude 'fr/iglee42/createcasing/registries/EncasedRecipeGens.java'
     exclude 'fr/iglee42/createcasing/registries/generators/**'
-    // Compat with mods that have no Fabric 1.21.11 release (KubeJS, Slice and Dice, Farmer's Delight).
+    // Compat with mods that have no Fabric 1.21.10 release (KubeJS, Slice and Dice, Farmer's Delight).
     exclude 'fr/iglee42/createcasing/kubejs/**'
     exclude 'fr/iglee42/createcasing/compat/sliceanddice/**'
     exclude 'fr/iglee42/createcasing/mixins/sliceanddice/**'
@@ -58,7 +58,7 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    // 1.21.11 is still obfuscated: compiled against Mojang names, remapped to intermediary for the jar.
+    // 1.21.10 is still obfuscated: compiled against Mojang names, remapped to intermediary for the jar.
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 

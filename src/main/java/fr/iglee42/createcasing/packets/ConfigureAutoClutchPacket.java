@@ -40,7 +40,7 @@ public record ConfigureAutoClutchPacket(BlockPos pos, int stress, int mode, int 
 
     private void handle(ServerPlayer player) {
         Level level = player.level();
-        if (!level.isLoaded(pos) || !player.isWithinBlockInteractionRange(pos, 20))
+        if (!level.isLoaded(pos) || !player.canInteractWithBlock(pos, 20))
             return;
         if (!(level.getBlockEntity(pos) instanceof AutoClutchBlockEntity be))
             return;

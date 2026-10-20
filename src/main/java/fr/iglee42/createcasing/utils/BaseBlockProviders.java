@@ -11,7 +11,7 @@ import fr.iglee42.createcasing.config.CCStress;
 import fr.iglee42.createcasing.config.EncasedConfigs;
 import fr.iglee42.createcasing.registries.EncasedBlocks;
 import net.minecraft.world.level.block.Block;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.DoubleSupplier;
 

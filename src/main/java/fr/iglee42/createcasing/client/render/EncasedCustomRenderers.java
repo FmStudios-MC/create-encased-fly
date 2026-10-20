@@ -6,8 +6,7 @@ import com.zurrtum.create.client.content.kinetics.base.KineticBlockEntityRendere
 import com.zurrtum.create.client.content.kinetics.base.KineticBlockEntityRenderer.KineticRenderState;
 import com.zurrtum.create.content.kinetics.base.KineticBlockEntity;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
-import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -27,7 +26,7 @@ public final class EncasedCustomRenderers {
         // cutout, not the casing's layer: the inner shaft may be the glass one
         @Override
         protected RenderType getRenderType(KineticBlockEntity be, BlockState state) {
-            return RenderTypes.cutoutMovingBlock();
+            return RenderType.cutout();
         }
 
         @Override

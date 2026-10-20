@@ -6,9 +6,9 @@ import com.zurrtum.create.catnip.config.ConfigBase;
 import com.zurrtum.create.catnip.config.DoubleRawValue;
 import fr.iglee42.createcasing.registries.EncasedBlocks;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.IdentityHashMap;
@@ -46,15 +46,15 @@ public class CCStress extends ConfigBase {
         CAPACITY_BY_BASE.put(AllBlocks.COPPER_VALVE_HANDLE, 8.0);
     }
 
-    protected final Map<Identifier, DoubleRawValue> capacities = new HashMap<>();
-    protected final Map<Identifier, DoubleRawValue> impacts = new HashMap<>();
+    protected final Map<ResourceLocation, DoubleRawValue> capacities = new HashMap<>();
+    protected final Map<ResourceLocation, DoubleRawValue> impacts = new HashMap<>();
 
     @Override
     public void registerAll(Builder builder) {
-        Map<Identifier, Double> defaultImpacts = new LinkedHashMap<>();
-        Map<Identifier, Double> defaultCapacities = new LinkedHashMap<>();
+        Map<ResourceLocation, Double> defaultImpacts = new LinkedHashMap<>();
+        Map<ResourceLocation, Double> defaultCapacities = new LinkedHashMap<>();
         for (Block block : EncasedBlocks.ALL) {
-            Identifier id = BuiltInRegistries.BLOCK.getKey(block);
+            ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
             Block base = EncasedBlocks.getBase(block);
             if (base == null)
                 continue;

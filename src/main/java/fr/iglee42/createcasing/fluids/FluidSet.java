@@ -1,7 +1,7 @@
 package fr.iglee42.createcasing.fluids;
 
 import net.minecraft.world.level.block.Block;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Supplier;

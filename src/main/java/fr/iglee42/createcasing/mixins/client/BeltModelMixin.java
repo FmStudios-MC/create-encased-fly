@@ -2,7 +2,7 @@ package fr.iglee42.createcasing.mixins.client;
 
 import com.zurrtum.create.catnip.data.Iterate;
 import com.zurrtum.create.client.catnip.render.SpriteShiftEntry;
-import com.zurrtum.create.client.model.NormalsBakedQuad;
+import com.zurrtum.create.client.foundation.model.BakedQuadHelper;
 import com.zurrtum.create.client.infrastructure.model.BeltModel;
 import com.zurrtum.create.client.infrastructure.model.WrapperBlockStateModel;
 import com.zurrtum.create.content.kinetics.belt.BeltBlock;
@@ -10,7 +10,6 @@ import com.zurrtum.create.content.kinetics.belt.BeltBlockEntity;
 import fr.iglee42.createcasing.casings.CasingSet;
 import fr.iglee42.createcasing.casings.CasingSets;
 import fr.iglee42.createcasing.client.CasingSetVisuals;
-import net.minecraft.client.model.geom.builders.UVPair;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BlockModelPart;
 import net.minecraft.client.renderer.block.model.SimpleModelWrapper;
@@ -21,7 +20,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -86,16 +85,12 @@ public abstract class BeltModelMixin extends WrapperBlockStateModel {
     private static BakedQuad createcasing$shift(SpriteShiftEntry shift, BakedQuad quad) {
         if (quad.sprite() != shift.getOriginal())
             return quad;
-        BakedQuad shifted = new BakedQuad(quad.position0(), quad.position1(), quad.position2(), quad.position3(),
-            createcasing$uv(shift, quad.packedUV0()), createcasing$uv(shift, quad.packedUV1()),
-            createcasing$uv(shift, quad.packedUV2()), createcasing$uv(shift, quad.packedUV3()),
-            quad.tintIndex(), quad.direction(), quad.sprite(), quad.shade(), quad.lightEmission());
-        NormalsBakedQuad.setNormals(shifted, NormalsBakedQuad.getNormals(quad));
+        BakedQuad shifted = BakedQuadHelper.clone(quad);
+        int[] vertexData = shifted.vertices();
+        for (int vertex = 0; vertex < 4; vertex++) {
+            BakedQuadHelper.setU(vertexData, vertex, shift.getTargetU(BakedQuadHelper.getU(vertexData, vertex)));
+            BakedQuadHelper.setV(vertexData, vertex, shift.getTargetV(BakedQuadHelper.getV(vertexData, vertex)));
+        }
         return shifted;
-    }
-
-    @Unique
-    private static long createcasing$uv(SpriteShiftEntry shift, long packedUv) {
-        return UVPair.pack(shift.getTargetU(UVPair.unpackU(packedUv)), shift.getTargetV(UVPair.unpackV(packedUv)));
     }
 }

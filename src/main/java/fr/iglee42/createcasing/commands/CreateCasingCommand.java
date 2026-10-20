@@ -9,7 +9,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -36,16 +36,16 @@ public class CreateCasingCommand {
         return placeBlocks(source, id -> id.getPath().contains(filter));
     }
 
-    private int placeBlocks(CommandContext<CommandSourceStack> source, Predicate<Identifier> filter) {
+    private int placeBlocks(CommandContext<CommandSourceStack> source, Predicate<ResourceLocation> filter) {
         ServerLevel level = source.getSource().getLevel();
         ServerPlayer player = source.getSource().getPlayer();
         if (player == null)
             return 0;
-        List<Identifier> blocks = BuiltInRegistries.BLOCK.keySet().stream()
+        List<ResourceLocation> blocks = BuiltInRegistries.BLOCK.keySet().stream()
             .filter(k -> k.getNamespace().equals(CreateCasing.MODID) && filter.test(k)).toList();
         int x = 0;
         int y = 0;
-        for (Identifier id : blocks) {
+        for (ResourceLocation id : blocks) {
             BlockPos pos = player.blockPosition().offset(x, y, 0);
             level.setBlockAndUpdate(pos, BuiltInRegistries.BLOCK.getValue(id).defaultBlockState());
             x++;

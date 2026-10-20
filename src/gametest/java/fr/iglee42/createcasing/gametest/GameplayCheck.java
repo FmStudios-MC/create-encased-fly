@@ -23,7 +23,7 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -217,7 +217,7 @@ public class GameplayCheck implements FabricClientGameTest {
             });
             check(server, "recipes loaded", level -> {
                 long count = level.getServer().getRecipeManager().getRecipes().stream()
-                    .filter(r -> r.id().identifier().getNamespace().equals("createcasing")).count();
+                    .filter(r -> r.id().location().getNamespace().equals("createcasing")).count();
                 return count + " recipes" + (count >= 258 ? "" : " FAIL");
             });
         }
@@ -247,7 +247,7 @@ public class GameplayCheck implements FabricClientGameTest {
     }
 
     private static Block block(String path) {
-        return BuiltInRegistries.BLOCK.getValue(Identifier.fromNamespaceAndPath("createcasing", path));
+        return BuiltInRegistries.BLOCK.getValue(ResourceLocation.fromNamespaceAndPath("createcasing", path));
     }
 
     private static String id(ServerLevel level, BlockPos pos) {

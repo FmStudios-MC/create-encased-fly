@@ -14,7 +14,7 @@ import fr.iglee42.createcasing.blockEntities.ConfigurableGearboxBlockEntity;
 import fr.iglee42.createcasing.blocks.ConfigurableGearboxBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.Map;

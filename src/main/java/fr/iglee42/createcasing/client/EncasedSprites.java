@@ -7,7 +7,7 @@ import com.zurrtum.create.client.foundation.block.connected.CTSpriteShiftEntry;
 import com.zurrtum.create.client.foundation.block.connected.CTSpriteShifter;
 import com.zurrtum.create.client.foundation.block.connected.CTType;
 import fr.iglee42.createcasing.CreateCasing;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Connected-texture and sprite shifts. Create Fly 1.21.11 reads connected textures as upstream's
@@ -20,7 +20,7 @@ import net.minecraft.resources.Identifier;
 public class EncasedSprites {
     public static final CTSpriteShiftEntry ZINC_CASING = omni("casing/zinc");
     public static final CTSpriteShiftEntry CREATIVE_CASING = CTSpriteShifter.getCT(AllCTTypes.OMNIDIRECTIONAL,
-        Identifier.fromNamespaceAndPath("create", "block/creative_casing"), CreateCasing.asResource("block/creative_casing_connected"));
+        ResourceLocation.fromNamespaceAndPath("create", "block/creative_casing"), CreateCasing.asResource("block/creative_casing_connected"));
 
     public static final CTSpriteShiftEntry RAILWAY_ENCASED_COGWHEEL_SIDE = vertical("encased_cogwheel/railway");
     public static final CTSpriteShiftEntry RAILWAY_ENCASED_COGWHEEL_OTHERSIDE = horizontal("encased_cogwheel/railway");
@@ -55,7 +55,7 @@ public class EncasedSprites {
 
     /** Belts are modelled with Create's brass casing; other casings shift its sprite onto theirs. */
     private static SpriteShiftEntry beltCasing(String name) {
-        return SpriteShifter.get(Identifier.fromNamespaceAndPath("create", "block/belt/brass_belt_casing"), CreateCasing.asResource("block/belt_casing/" + name));
+        return SpriteShifter.get(ResourceLocation.fromNamespaceAndPath("create", "block/belt/brass_belt_casing"), CreateCasing.asResource("block/belt_casing/" + name));
     }
 
     private static CTSpriteShiftEntry horizontal(String name) {

@@ -1,4 +1,4 @@
-# Porting notes: Create Encased → Create Fly (Fabric, MC 26.2, ported back to 1.21.11)
+# Porting notes: Create Encased → Create Fly (Fabric, MC 26.2, ported back to 1.21.11 and 1.21.10)
 
 ## State
 
@@ -14,13 +14,35 @@ the mod's drills/saws/rollers, the automatic clutch screen, belts with every cas
 | | |
 |---|---|
 | Upstream | https://github.com/iglee42/CreateCasing, branch `1.21.1/main` (1.9.0-ht3, commit `f584aaab`) |
-| Target | Minecraft 1.21.11 (Mojang mappings, remapped to intermediary), Fabric Loader 0.18.4, Fabric API 0.141.6+1.21.11 |
-| Create Fly | `maven.modrinth:create-fly:1.21.11-6.0.9-5` |
-| Optional | JEI 27.7.0.30 (Modrinth id `Mia233qP`) |
+| Target | Minecraft 1.21.10 (Mojang mappings, remapped to intermediary), Fabric Loader 0.18.4, Fabric API 0.138.4+1.21.10 |
+| Create Fly | `maven.modrinth:create-fly:1.21.10-6.0.9-2` |
+| Optional | JEI 26.2.0.30 (Modrinth id `Y0JKqg8L`) |
 | Licence | MIT: keep `LICENSE` with iglee42's copyright notice |
 
 Mod id (`createcasing`), package (`fr.iglee42.createcasing`) and all block and item ids are
 unchanged, so recipes and data packs written for upstream apply.
+
+### Branch `1.21.10`
+
+The `1.21.11` backport taken one version further back, version `1.9.0-ht3-fly.1.21.10`, against
+Create Fly `1.21.10-6.0.9-2` (its remapped sources jar is under `.gradle/loom-cache/remapped_mods`
+too). Build, assets and data are as on `1.21.11` (Create Fly's own JSONs are the same formats in
+both); the code differs only where Minecraft renamed things in 1.21.11:
+
+- `ResourceLocation` (1.21.11: `Identifier`), `ResourceKey.location()` (`identifier()`),
+  `org.jetbrains.annotations.Nullable` (1.21.11 ships `org.jspecify`).
+- `RenderType.solid()` / `RenderType.cutout()` in `net.minecraft.client.renderer` (1.21.11:
+  `RenderTypes.solidMovingBlock()` / `cutoutMovingBlock()` in `...renderer.rendertype`).
+- `Player.canInteractWithBlock` (1.21.11: `isWithinBlockInteractionRange`).
+- `BakedQuad` still holds a packed `int[]` of vertices: `BeltModelMixin` shifts the UVs with
+  Create Fly's `BakedQuadHelper`, as Create Fly 1.21.10's `BeltModel` does.
+- `fabric.mod.json` requires Minecraft `>=1.21.10 <1.21.11-`, Fabric API `>=0.138.4`, Create
+  `>=6.0.9-2`.
+
+Checked on 2026-10-20: `runServer --args="--world world-1.21.10"` reaches `Done` with no errors
+(`run/world` was saved by a newer version and cannot be loaded on 1.21.10);
+`runClientGameTest` passes all 25 gameplay checks, the close-ups and ponder scenes render with
+their casings and connected textures.
 
 ### Branch `1.21.11`
 

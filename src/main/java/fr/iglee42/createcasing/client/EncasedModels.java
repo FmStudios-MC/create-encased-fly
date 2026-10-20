@@ -30,7 +30,7 @@ import fr.iglee42.createcasing.transmissions.TransmissionSet;
 import fr.iglee42.createcasing.transmissions.TransmissionSets;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.world.level.block.Block;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Block model wrappers (connected textures, pipe attachments, tanks, bracketed shafts) and casing

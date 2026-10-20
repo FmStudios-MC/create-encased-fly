@@ -7,7 +7,7 @@ import fr.iglee42.createcasing.blocks.cogwheels.WoodenCogwheelBlock;
 import fr.iglee42.createcasing.blocks.shafts.GlassShaftBlock;
 import fr.iglee42.createcasing.blocks.shafts.WoodenShaftBlock;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.properties.WoodType;
 
@@ -55,7 +55,7 @@ public class TransmissionSets {
                 .wooden()
                 .shaftConstructor(WoodenShaftBlock::new)
                 .cogwheelConstructor((props, large) -> large ? WoodenCogwheelBlock.large(props) : WoodenCogwheelBlock.small(props))
-                .everything(() -> BuiltInRegistries.ITEM.getValue(Identifier.withDefaultNamespace(name + "_planks")))
+                .everything(() -> BuiltInRegistries.ITEM.getValue(ResourceLocation.withDefaultNamespace(name + "_planks")))
             );
             woodSets.put(woodType, set);
         }

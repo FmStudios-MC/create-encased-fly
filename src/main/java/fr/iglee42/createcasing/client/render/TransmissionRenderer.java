@@ -12,7 +12,7 @@ import com.zurrtum.create.content.kinetics.simpleRelays.ICogWheel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay;
 import net.minecraft.world.phys.Vec3;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Create Fly's {@code BracketedKineticBlockEntityRenderer} for the mod's shafts and cogwheels: small

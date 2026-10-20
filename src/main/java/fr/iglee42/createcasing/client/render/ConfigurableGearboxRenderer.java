@@ -16,13 +16,13 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.phys.Vec3;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +72,7 @@ public class ConfigurableGearboxRenderer implements BlockEntityRenderer<Configur
     @Override
     public void submit(State state, PoseStack matrices, SubmitNodeCollector queue, CameraRenderState cameraState) {
         if (!state.shafts.isEmpty())
-            queue.submitCustomGeometry(matrices, RenderTypes.solidMovingBlock(), state);
+            queue.submitCustomGeometry(matrices, RenderType.solid(), state);
     }
 
     public static class State extends BlockEntityRenderState implements SubmitNodeCollector.CustomGeometryRenderer {

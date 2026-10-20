@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.zurrtum.create.content.kinetics.belt.BeltBlockEntity.CasingType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Supplier;

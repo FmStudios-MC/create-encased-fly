@@ -4,7 +4,7 @@ import fr.iglee42.createcasing.CreateCasing;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
@@ -17,7 +17,7 @@ public class EncasedSounds {
     public static final SoundEvent MLDEG = register("mldeg");
 
     private static SoundEvent register(String name) {
-        Identifier id = CreateCasing.asResource(name);
+        ResourceLocation id = CreateCasing.asResource(name);
         return Registry.register(BuiltInRegistries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));
     }
 

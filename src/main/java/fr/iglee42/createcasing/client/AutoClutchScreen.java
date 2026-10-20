@@ -16,12 +16,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 /** Mode, comparison and value of an automatic clutch. Sends its settings when closed, as upstream. */
 public class AutoClutchScreen extends AbstractSimiScreen {
-    private static final Identifier BACKGROUND = CreateCasing.asResource("textures/gui/automatic_clutch.png");
+    private static final ResourceLocation BACKGROUND = CreateCasing.asResource("textures/gui/automatic_clutch.png");
     private static final int WIDTH = 254;
     private static final int HEIGHT = 104;
 

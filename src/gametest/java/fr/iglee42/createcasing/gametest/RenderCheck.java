@@ -60,7 +60,7 @@ public class RenderCheck implements FabricClientGameTest {
 
             // ponder: the mod's own scenes, and Create's scenes for its variants
             for (String item : new String[]{"creative_cogwheel", "brass_configurable_gearbox", "railway_automatic_clutch", "railway_press", "brass_fluid_tank"}) {
-                var ponderItem = BuiltInRegistries.ITEM.getValue(net.minecraft.resources.Identifier.fromNamespaceAndPath("createcasing", item));
+                var ponderItem = BuiltInRegistries.ITEM.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("createcasing", item));
                 context.setScreen(() -> com.zurrtum.create.client.ponder.foundation.ui.PonderUI.of(new net.minecraft.world.item.ItemStack(ponderItem)));
                 context.waitTicks(100);
                 context.takeScreenshot("ponder_" + item);
